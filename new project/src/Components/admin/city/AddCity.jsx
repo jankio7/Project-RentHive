@@ -1,13 +1,14 @@
-import axios from "axios"
 import { addDoc, collection, Timestamp } from "firebase/firestore"
-import {db} from "../../firebase"
+
 import { useState } from "react"
+import axios from "axios"
 import { toast } from "react-toastify"
+import { db } from "../../../Firebase"
 
 export default function AddCity(){
     const[cityName,setCityName]=useState("")
     const[description, setDescription]=useState("")
-    const[image,setImage]=useState("")
+    const[image,setImage]=useState([])
     const[imageName,setImageName]=useState("")
 
     const handleForm= async (e)=>{
@@ -55,7 +56,7 @@ export default function AddCity(){
         
          <section
         className="hero-wrap hero-wrap-2"
-        style={{ backgroundImage: 'url("/assets/images/bg_2.jpg")' }}
+        style={{ backgroundImage: 'url("/assets/img/hero-carousel/hero-carousel-1.jpg")' }}
         data-stellar-background-ratio="0.5"
       >
         <div className="overlay" />

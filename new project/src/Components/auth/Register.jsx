@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useState } from "react"
-import { auth, db } from "../../Firebase"
+import { auth,db } from "../../firebase"
 import { toast } from "react-toastify"
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
@@ -38,7 +38,7 @@ export default function Register(){
       }
       // console.log(data);
       //  setDoc(doc(db, collectionName, id), data)
-      await setDoc(doc(db, "users",userId),data)
+      await setDoc(doc(db ,"users"  ,userId),data)
       toast.success("Register successfully!!")
       getUserData(userId)
       // setTimeout(()=>{
@@ -68,7 +68,7 @@ export default function Register(){
         <>
         <section
                 className="hero-wrap hero-wrap-2"
-                style={{ backgroundImage: 'url("/assets/images/bg_2.jpg")' }}
+                style={{ backgroundImage: 'url("/assets/img/about-company-3.jpg")' }}
                 data-stellar-background-ratio="0.5"
             >
                 <div className="overlay" />

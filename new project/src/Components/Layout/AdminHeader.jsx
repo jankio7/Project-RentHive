@@ -46,6 +46,7 @@ export default function AdminHeader(){
                     <Link to="/admin/dashboard">AdminDashboard</Link>
                   </li>
                   <li>
+                    
                     <Link to="/admin/Addcity">Add City</Link>
                   </li>
                   <li>
@@ -56,35 +57,19 @@ export default function AdminHeader(){
                   </li>
                   <li className="dropdown">
                     <a href="#">
-                      <span>Dropdown</span>{" "}
+                      <span>City</span>{" "}
                       <i className="bi bi-chevron-down toggle-dropdown" />
                     </a>
                     <ul>
                       <li>
-                        <a href="#">Dropdown 1</a>
+                        < a href="#">Add City</a>
                       </li>
                       <li className="dropdown">
-                        <a href="#">
-                          <span>Deep Dropdown</span>{" "}
+                        < a href ="#">
+                          <span>Manage City</span>{" "}
                           <i className="bi bi-chevron-down toggle-dropdown" />
                         </a>
-                        <ul>
-                          <li>
-                            <a href="#">Deep Dropdown 1</a>
-                          </li>
-                          <li>
-                            <a href="#">Deep Dropdown 2</a>
-                          </li>
-                          <li>
-                            <a href="#">Deep Dropdown 3</a>
-                          </li>
-                          <li>
-                            <a href="#">Deep Dropdown 4</a>
-                          </li>
-                          <li>
-                            <a href="#">Deep Dropdown 5</a>
-                          </li>
-                        </ul>
+                        
                       </li>
                       <li>
                         <a href="#">Dropdown 2</a>
