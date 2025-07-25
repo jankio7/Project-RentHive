@@ -1,5 +1,6 @@
 import axios from "axios"
-import { Timestamp } from "firebase/firestore"
+import { addDoc, collection, Timestamp } from "firebase/firestore"
+import {db} from "../../firebase"
 import { useState } from "react"
 import { toast } from "react-toastify"
 
@@ -12,13 +13,12 @@ export default function AddCity(){
     const handleForm= async (e)=>{
         e.preventDefault();
         const formData= new FormData();
-        FormData.append("file", image)
-        FormData.append("upload_preset","images");
+        formData.append("file", image)
+        formData.append("upload_preset","images");
     
     try{
         const response = await axios.post(
-           'https://console.cloudinary.com/dydsmxjpx/upload/presets',
-           formData
+           `https://api.cloudinary.com/v1_1/dydsmxjpx/image/upload`,formData
         );
         saveData(response.data.secure_url)
     } catch(error){

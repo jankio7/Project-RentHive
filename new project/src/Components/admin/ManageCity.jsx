@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { db } from "../../Firebase";
+import { db } from "../../firebase";
 
 export default function ManageCity() {
   const [AllCities, setAllCities] = useState([]);
@@ -67,7 +67,7 @@ export default function ManageCity() {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th>1</th>
+                    <th>#</th>
                     <th>City Name</th>
                     <th>Image</th>
                     <th>Action</th>
@@ -77,11 +77,11 @@ export default function ManageCity() {
                   {AllCities.map((el, index) => (
                     <tr key={el.id}>
                       <td>{index + 1}</td>
-                      <td>{el.name}</td>
+                      <td>{el.cityName}</td>
                       <td>
                         <img
                           src={el.image}
-                          alt={el.name}
+                          alt={el.cityName}
                           style={{ width: "100px", height: "auto" }}
                         />
                       </td>
