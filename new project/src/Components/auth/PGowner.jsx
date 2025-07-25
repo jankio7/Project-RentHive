@@ -5,26 +5,24 @@ import { toast } from "react-toastify"
 import { doc, setDoc, Timestamp } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
 
-export default function Register(){
+export default function PGowner(){
   const [name, setName]=useState("")
   const [email, setEmail]=useState("")
   const [password, setPassword]=useState("")
   const [contact, setContact]=useState("")
-  let nav = useNavigate()
+  let nav=useNavigate()
   const handleForm=(e)=>{
     e.preventDefault()
-    // console.log();
-    
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCred)=>{
       let userId=userCred.user.uid
-      console.log(userId);
       saveData(userId)
     })
     .catch((err)=>{
       toast.error(err.message)
     })
   }
+
   const saveData=async (userId)=>{
     try{
       let data={
@@ -32,17 +30,16 @@ export default function Register(){
         email:email,
         contact:contact,
         userId:userId,
-        userType:3, 
+        userType:2, 
         status:true, 
         createdAt:Timestamp.now()
       }
-      // console.log(data);
-      //  setDoc(doc(db, collectionName, id), data)
+  
       await setDoc(doc(db, "users",userId),data)
       toast.success("Register successfully!!")
       setTimeout(()=>{
           nav("/");
-      },2000)
+      },3000)
     }
     catch(err){
       toast.error(err.message)

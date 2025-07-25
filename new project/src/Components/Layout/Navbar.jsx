@@ -56,7 +56,7 @@ export default function Navbar(){
           <li>
             <Link to="/agents">Agents</Link>
           </li>
-          <li className="dropdown">
+          {/* <li className="dropdown">
             <a href="#">
               <span>Dropdown</span>{" "}
               <i className="bi bi-chevron-down toggle-dropdown" />
@@ -98,7 +98,7 @@ export default function Navbar(){
                 <a href="#">Dropdown 4</a>
               </li>
             </ul>
-          </li>
+          </li> */}
           <li>
             <Link to ="contact">Contact</Link>
           </li>

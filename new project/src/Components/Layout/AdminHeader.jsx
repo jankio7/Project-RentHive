@@ -37,22 +37,22 @@ export default function AdminHeader(){
               </a>
               <nav id="navmenu" className="navmenu">
                 <ul>
-                  <li>
+                  {/* <li>
                     <Link to="index.html" className="active">
                       Home
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/admin/dashboard">AdminDashboard</Link>
                   </li>
                   <li>
-                    <Link to="/admin/Add city">Add city</Link>
+                    <Link to="/admin/Addcity">Add City</Link>
                   </li>
                   <li>
-                    <Link to="/admin/Manage city">Manage city</Link>
+                    <Link to="/admin/Managecity">Manage city</Link>
                   </li>
                   <li>
-                    <Link to="/admin/Manage PGowners">Manage PGowner</Link>
+                    <Link to="/admin/ManagePGowners">Manage PGowner</Link>
                   </li>
                   <li className="dropdown">
                     <a href="#">

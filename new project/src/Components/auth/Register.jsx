@@ -2,27 +2,29 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useState } from "react"
 import { auth, db } from "../../Firebase"
 import { toast } from "react-toastify"
-import { doc, setDoc, Timestamp } from "firebase/firestore"
+import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
 
-export default function PGowner(){
+export default function Register(){
   const [name, setName]=useState("")
   const [email, setEmail]=useState("")
   const [password, setPassword]=useState("")
   const [contact, setContact]=useState("")
-  let nav=useNavigate()
+  let nav = useNavigate()
   const handleForm=(e)=>{
     e.preventDefault()
+    // console.log();
+    
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCred)=>{
       let userId=userCred.user.uid
+      console.log(userId);
       saveData(userId)
     })
     .catch((err)=>{
       toast.error(err.message)
     })
   }
-
   const saveData=async (userId)=>{
     try{
       let data={
@@ -30,22 +32,38 @@ export default function PGowner(){
         email:email,
         contact:contact,
         userId:userId,
-        userType:3, 
+        userType:2, 
         status:true, 
         createdAt:Timestamp.now()
       }
-  
+      // console.log(data);
+      //  setDoc(doc(db, collectionName, id), data)
       await setDoc(doc(db, "users",userId),data)
       toast.success("Register successfully!!")
-      setTimeout(()=>{
-          nav("/");
-      },3000)
+      getUserData(userId)
+      // setTimeout(()=>{
+      //     nav("/");
+      // },2000)
     }
     catch(err){
       toast.error(err.message)
     }
   }
-
+     const getUserData = async(userId)=>{
+      let userDoc = await getDoc(doc(db,"users",userId))
+      let userData= userDoc.data()
+      sessionStorage.setItem("name", userData?.name)
+      sessionStorage.setItem("email",userData?.email)
+      sessionStorage.setItem("userType", userData?.userType)
+      sessionStorage.setItem("userId", userId)
+      sessionStorage.setItem("isLogin", true)
+      toast.success("Login successfully")
+      if(userData?.userType == 2){
+     nav("/admin")
+      }else{
+        nav("/")
+      }
+     }
     return(
         <>
         <section

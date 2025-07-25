@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "../../Firebase";
+import { getDoc } from "firebase/firestore";
 
 
 export default function Login(){
@@ -19,6 +20,19 @@ export default function Login(){
   const handleForm=(e)=>{
     e.preventDefault()
     signInWithEmailAndPassword(auth,email,password)
+//      if (userEmail === "admin@gmail.com") {
+//     localStorage.setItem("isAdmin", "true");
+//     setTimeout(() => {
+//       nav("/admin/dashboard");
+//     }, 2000);
+//   } else {
+//     localStorage.setItem("isAdmin", "false");
+//     setTimeout(() => {
+//       nav("/");
+//     }, 2000);
+//   }  
+// } 
+
     .then((userCred)=>{
       console.log("signin",userCred.user.uid);
       toast.success("Login successfully");
@@ -29,8 +43,23 @@ export default function Login(){
     })
     .catch((error)=>{
      toast.error(error.message);
-    })
+    }  )
 
+  }
+  const getUserData = async(userId)=>{
+    let userDoc = await getDoc(doc(db,"user",userId))
+    let userData = userDoc.data()
+    sessionStorage.setItem("name", userData?.name)
+    sessionStoragestorage.setItem("email",userData?.email)
+    sessionStorage.setItem("userType", userData?.userType)
+    sessionStorage.setItem("userId", userId)
+    sessionStorage.setItem("Login successfully")
+    if (userData?.userType==2){
+      nav("/admin"); 
+    }
+    else{
+      nav("/")
+    }
   }
   const signInGoogle=()=>{
     let provider=new GoogleAuthProvider()
