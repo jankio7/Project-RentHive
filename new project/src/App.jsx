@@ -46,9 +46,9 @@ function App() {
 
           <Route path="/admin" element={<AdminLayout />}>
              {/* <Route index element={<AdminDashboard />} /> */}
-             <Route path="addcity" element={<AddCity/>}/>
-             <Route path="managecity" element={<ManageCity/>}/>
-             <Route path="update" element={<Update/>}/>
+             <Route path="city/add" element={<AddCity/>}/>
+             <Route path="city/manage" element={<ManageCity/>}/>
+             <Route path="city/update/:id" element={<Update/>}/>
              {/* <Route path="/pgowner-dashboard" element={<PGowner/>} /> */}
              <Route path="users">
            <Route path="manageusers" element={<ManageUsers/>} />

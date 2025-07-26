@@ -1,9 +1,10 @@
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useState } from "react"
-import { auth,db } from "../../firebase"
+
 import { toast } from "react-toastify"
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
+import { auth, db } from "../../Firebase"
 
 export default function Register(){
   const [name, setName]=useState("")
@@ -32,7 +33,7 @@ export default function Register(){
         email:email,
         contact:contact,
         userId:userId,
-        userType:2, 
+        userType:userType, 
         status:true, 
         createdAt:Timestamp.now()
       }

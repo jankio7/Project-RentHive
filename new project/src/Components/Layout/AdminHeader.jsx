@@ -45,47 +45,23 @@ export default function AdminHeader(){
                   <li>
                     <Link to="/admin/dashboard">AdminDashboard</Link>
                   </li>
-                  <li>
-                    
-                    <Link to="/admin/Addcity">Add City</Link>
-                  </li>
-                  <li>
-                    <Link to="/admin/Managecity">Manage city</Link>
-                  </li>
-                  <li>
+                  <li className="dropdown">
+                    <Link to = " "> City <i className="=bi bi-chevron-dropdown toggle-dropdown-indicator">
+                      </i></Link>
+                 
+                
+                    <ul>
+                      <li><Link to="/admin/city/add">Add city</Link></li>
+                      <li><Link to="/admin/city/manage">Manage city</Link></li>
+                    </ul>
+                    </li>
+  <li>
                     <Link to="/admin/ManagePGowners">Manage PGowner</Link>
                   </li>
-                  <li className="dropdown">
-                    <a href="#">
-                      <span>City</span>{" "}
-                      <i className="bi bi-chevron-down toggle-dropdown" />
-                    </a>
-                    <ul>
-                      <li>
-                        < a href="#">Add City</a>
-                      </li>
-                      <li className="dropdown">
-                        < a href ="#">
-                          <span>Manage City</span>{" "}
-                          <i className="bi bi-chevron-down toggle-dropdown" />
-                        </a>
-                        
-                      </li>
-                      <li>
-                        <a href="#">Dropdown 2</a>
-                      </li>
-                      <li>
-                        <a href="#">Dropdown 3</a>
-                      </li>
-                      <li>
-                        <a href="#">Dropdown 4</a>
-                      </li>
-                    </ul>
-                  </li>
                   <li>
-                    <Link to ="/admin/Manage property">Manage property</Link>
+                    <Link to="/admin/Manageproperty">Manage property</Link>
                   </li>
-                       {
+                   {
                     isLogin? (
                     <li className="nav-items">
                     <Link to ={"#"} onClick={handleLogout} className="nav-link">Logout</Link>

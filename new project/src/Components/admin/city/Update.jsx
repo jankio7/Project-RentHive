@@ -1,10 +1,11 @@
-import { Timestamp, doc, getDoc, updateDoc } from "@firebase/firestore"
+import { Timestamp, doc, getDoc, updateDoc } from "firebase/firestore"
 import { useEffect } from "react"
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { db } from "../../../Firebase"
 import axios from "axios"
+// import { PulseLoader } from "react-spinners"
 
 
 export default function Update(){
@@ -14,6 +15,9 @@ export default function Update(){
     const[image,setImage]=useState([])
     const[imageName,setImageName]=useState("")
      const [previousImg, setPreviousImg]=useState("")
+     const[load, setLoad]=useState("")
+     const[AllCities, setAllCities]=useState("")
+
      useEffect(()=>{
         fetchData()
      },[])

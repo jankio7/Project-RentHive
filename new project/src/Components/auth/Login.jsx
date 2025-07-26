@@ -54,8 +54,9 @@ export default function Login(){
     sessionStorage.setItem("userType", userData?.userType)
     sessionStorage.setItem("userId", userId)
     sessionStorage.setItem("Login successfully")
-    if (userData?.userType==2){
+    if (userType==2){
       nav("/admin"); 
+      
     }
     else{
       nav("/")
