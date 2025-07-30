@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth } from "../../Firebase";
-import { getDoc } from "firebase/firestore";
+import { auth, db } from "../../Firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 
 export default function Login(){
@@ -19,27 +19,12 @@ export default function Login(){
   let nav=useNavigate()
   const handleForm=(e)=>{
     e.preventDefault()
-    signInWithEmailAndPassword(auth,email,password)
-//      if (userEmail === "admin@gmail.com") {
-//     localStorage.setItem("isAdmin", "true");
-//     setTimeout(() => {
-//       nav("/admin/dashboard");
-//     }, 2000);
-//   } else {
-//     localStorage.setItem("isAdmin", "false");
-//     setTimeout(() => {
-//       nav("/");
-//     }, 2000);
-//   }  
-// } 
-
-    .then((userCred)=>{
+    signInWithEmailAndPassword(auth,email,password).then((userCred)=>{
       console.log("signin",userCred.user.uid);
-      toast.success("Login successfully");
-       sessionStorage.setItem("isLogin", "true");
-      setTimeout(()=>{
-          nav("/");
-      },2000)
+      // 
+      getUserData(userCred.user.uid)
+      
+     
     })
     .catch((error)=>{
      toast.error(error.message);
@@ -47,20 +32,24 @@ export default function Login(){
 
   }
   const getUserData = async(userId)=>{
-    let userDoc = await getDoc(doc(db,"user",userId))
+    let userDoc = await getDoc(doc(db,"users",userId))
     let userData = userDoc.data()
     sessionStorage.setItem("name", userData?.name)
-    sessionStoragestorage.setItem("email",userData?.email)
+    sessionStorage.setItem("email",userData?.email)
     sessionStorage.setItem("userType", userData?.userType)
     sessionStorage.setItem("userId", userId)
-    sessionStorage.setItem("Login successfully")
-    if (userType==2){
+    sessionStorage.setItem("isLogin", true);
+    toast.success("Login successfully");
+    if (userData?.userType==1){
       nav("/admin"); 
       
     }
-    else{
-      nav("/")
-    }
+     else if (userData?.userType === 2) {
+      nav("/pgowner");
+     } else {
+     nav("/user"); 
+   }
+   
   }
   const signInGoogle=()=>{
     let provider=new GoogleAuthProvider()

@@ -74,10 +74,10 @@ export default function ManageUsers(){
                   </a>
                 </span>
                 <span>
-                  City <i className="ion-ios-arrow-forward" />
+                  Users<i className="ion-ios-arrow-forward" />
                 </span>
               </p>
-              <h1 className="mb-0 bread"> City</h1>
+              <h1 className="mb-0 bread"> Manage Users</h1>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function ManageUsers(){
         <div className="row justify-content-center no-gutters">
           <div className="col-md-10" style={{ boxShadow: "0px 0px 15px gray" }}>
             <div className="contact-wrap w-100 p-md-5 p-4">
-              <h3 className="mb-4">Manage Cities</h3>
+              <h3 className="mb-4">Manage Users</h3>
               <table className="table table-striped">
                 <thead>
                   <tr>

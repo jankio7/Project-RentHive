@@ -1,7 +1,6 @@
 import About from "./Components/Pages/About"
 import Home from "./Components/Pages/Home"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 import Layout from "./Components/Layout/Layout";
 import Services from "./Components/Pages/Services";
 import Servicedetails from "./Components/Pages/Servicesdetails";
@@ -15,14 +14,14 @@ import AdminLayout from "./Components/Layout/AdminLayout";
 import Register from "./Components/auth/Register";
 import { ToastContainer } from "react-toastify";
 import PGowner from "./Components/auth/PGowner";
-// import AdminDashboard from "./Components/admin/AdminDashboard";
-// import AddCity from "./Components/admin/AddCity";
 import AddCity from "./Components/admin/city/AddCity";
 import ManageCity from "./Components/admin/city/ManageCity";
 import Update from "./Components/admin/city/Update";
-import ManageUsers from "./Components/admin/users/Manageusers";
+import ManagePGowners from "./Components/admin/ManagePGowner";
+import ManageUsers from "./Components/admin/users/ManageUsers"
+import Dashboard from "./Components/admin/Dashboard";
 
-// import ManageCity from "./Components/admin/ManageCity";
+
 
 function App() {
   return (
@@ -31,7 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
+             <Route path="about" element={<About />} />
             <Route path="properties" element={<Properties />} />
             <Route path="properitysingle" element={<Propertysingle />} />
             <Route path="services" element={<Services />} />
@@ -41,17 +40,19 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="pgowner" element={<PGowner />} />
+           
           </Route>
 
 
           <Route path="/admin" element={<AdminLayout />}>
-             {/* <Route index element={<AdminDashboard />} /> */}
+            <Route index element={<Dashboard/>}/>
+             
              <Route path="city/add" element={<AddCity/>}/>
              <Route path="city/manage" element={<ManageCity/>}/>
              <Route path="city/update/:id" element={<Update/>}/>
-             {/* <Route path="/pgowner-dashboard" element={<PGowner/>} /> */}
+            <Route path="ManagePGowners" element={<ManagePGowners/>}/>
              <Route path="users">
-           <Route path="manageusers" element={<ManageUsers/>} />
+           <Route path="manageUsers" element={<ManageUsers/>} />
           </Route>
         </Route>
 

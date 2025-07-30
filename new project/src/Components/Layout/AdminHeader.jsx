@@ -42,9 +42,9 @@ export default function AdminHeader(){
                       Home
                     </Link>
                   </li> */}
-                  <li>
-                    <Link to="/admin/dashboard">AdminDashboard</Link>
-                  </li>
+                  {/* <li>
+                    <Link to="admin/dashboard">Dashboard</Link>
+                  </li> */}
                   <li className="dropdown">
                     <Link to = " "> City <i className="=bi bi-chevron-dropdown toggle-dropdown-indicator">
                       </i></Link>
@@ -56,10 +56,17 @@ export default function AdminHeader(){
                     </ul>
                     </li>
   <li>
-                    <Link to="/admin/ManagePGowners">Manage PGowner</Link>
+                    <Link to="/admin/ManagePGowners">Manage PGowners</Link>
                   </li>
                   <li>
                     <Link to="/admin/Manageproperty">Manage property</Link>
+                  </li>
+                  <li>
+                    <Link to="/admin/users/ManageUsers">Manage Users</Link>
+                  </li>
+                 
+                      <li>
+                    <Link to="/admin/Managebookings">Manage Bookings</Link>
                   </li>
                    {
                     isLogin? (

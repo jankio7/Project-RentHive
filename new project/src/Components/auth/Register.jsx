@@ -59,8 +59,8 @@ export default function Register(){
       sessionStorage.setItem("userId", userId)
       sessionStorage.setItem("isLogin", true)
       toast.success("Login successfully")
-      if(userData?.userType == 2){
-     nav("/admin")
+      if(userData?.userType == 3){
+     nav("/user")
       }else{
         nav("/")
       }
