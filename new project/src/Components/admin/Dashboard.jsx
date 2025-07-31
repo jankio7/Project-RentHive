@@ -9,15 +9,15 @@ export default function Dashboard(){
     const [room, setRoom]=useState(0)
     useEffect(()=>{
         fetchUserCount()
-        fetchBreedCount()
+        fetchRoomCount()
     },[])
     const fetchUserCount=async ()=>{
         let usersCount= await getCountFromServer(collection(db,"users"))
         setUser(usersCount.data().count);
     }
-    const fetchBreedCount=async ()=>{
-        let breedCount= await getCountFromServer(collection(db,"room"))
-        setBreed(breedCount.data().count);
+    const fetchRoomCount=async ()=>{
+        let RoomCount= await getCountFromServer(collection(db,"room"))
+        setRoom(RoomCount.data().count);
         
     }
     return(
@@ -58,7 +58,7 @@ export default function Dashboard(){
               <h3 className="heading">Total Rooms</h3>
               <h1>{room}</h1>
               <Link
-                to={"/admin/city/manage"}
+                to={"/admin/roomcred/addroom"}
                 className="btn-custom d-flex align-items-center justify-content-center"
               >
                 <span className="fa fa-chevron-right" />

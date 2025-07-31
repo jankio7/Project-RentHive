@@ -20,6 +20,11 @@ import Update from "./Components/admin/city/Update";
 import ManagePGowners from "./Components/admin/ManagePGowner";
 import ManageUsers from "./Components/admin/users/ManageUsers"
 import Dashboard from "./Components/admin/Dashboard";
+import RoomcredLayout from "./Components/Layout/RoomcredLayout";
+import AddRoom from "./Components/admin/Roomcred/AddRoom";
+
+
+
 
 
 
@@ -56,6 +61,15 @@ function App() {
           </Route>
         </Route>
 
+
+     
+      <Route path="/admin/roomcred" element={<RoomcredLayout />}>
+  <Route path="addroom" element={<AddRoom/>} />
+</Route>
+     
+      
+      
+  
 
           
 
