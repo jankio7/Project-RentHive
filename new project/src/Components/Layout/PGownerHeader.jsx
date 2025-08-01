@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 
 
 
-export default function Navbar(){
+export default function PgownerHeader(){
   let isLogin=sessionStorage.getItem("isLogin")
   const nav=useNavigate()
   const handleLogout=()=>{
@@ -28,38 +28,33 @@ export default function Navbar(){
   }
     return(
         <>
-          {/* <header id="header" className="header d-flex align-items-center fixed-top"> */}
-    <div className="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" className="logo d-flex align-items-center">
-        {/* Uncomment the line below if you also wish to use an image logo */}
-        {/* <img src="assets/img/logo.png" alt=""> */}
+          
+      <header id="header" className="header d-flex align-items-center fixed-top">
+            <div className="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+              <a href="index.html" className="logo d-flex align-items-center">
+       
         <h1 className="sitename">
           Rent<span>Hive</span>
         </h1>
       </a>
       <nav id="navmenu" className="navmenu">
         <ul>
+          <li className="dropdown">
+                    <Link to = " ">   Property <i className="=bi bi-chevron-dropdown toggle-dropdown-indicator">
+                      </i></Link>
+                 
+                
+                    <ul>
+                      <li><Link to="/Pgowner/property/add property">Add property </Link></li>
+                      <li><Link to="/Pgowner/property/manage property">Manage property </Link></li>
+                    </ul>
+                    </li> 
+            
+        
           <li>
-            <Link to="index.html" className="active">
-              Home
-            </Link>
+            <Link to="Pgowner/Bookings">Bookings</Link>
           </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/services">Services</Link>
-          </li>
-          <li>
-            <Link to="/properties">Properties</Link>
-          </li>
-          <li>
-            <Link to="/agents">Agents</Link>
-          </li>
-     
-          <li>
-            <Link to ="contact">Contact</Link>
-          </li>
+         
           {
           isLogin?
          <li className="nav-item">
@@ -78,7 +73,7 @@ export default function Navbar(){
         <i className="mobile-nav-toggle d-xl-none bi bi-list" />
       </nav>
     </div>
-  {/* </header> */}
+  </header>
         </>
     )
 }

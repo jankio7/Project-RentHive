@@ -10,9 +10,7 @@ export default function AdminLayout(){
         return(
         <>
         <AdminHeader/>
-           {/* <main style={{ marginTop: "80px", padding: "20px" }}> */}
-        <Outlet/>
-        {/* </main> */}
+         <Outlet/>
         <Footer/>
          
         </>

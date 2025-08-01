@@ -5,7 +5,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import { db } from "../../../Firebase"
 
-export default function AddCity(){
+export default function Add(){
     const[cityName,setCityName]=useState("")
     const[description, setDescription]=useState("")
     const[image,setImage]=useState([])

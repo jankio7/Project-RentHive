@@ -14,8 +14,7 @@ import AdminLayout from "./Components/Layout/AdminLayout";
 import Register from "./Components/auth/Register";
 import { ToastContainer } from "react-toastify";
 import PGowner from "./Components/auth/PGowner";
-import AddCity from "./Components/admin/city/AddCity";
-import ManageCity from "./Components/admin/city/ManageCity";
+
 import Update from "./Components/admin/city/Update";
 import Dashboard from "./Components/admin/Dashboard";
 import RoomcredLayout from "./Components/Layout/RoomcredLayout";
@@ -24,13 +23,11 @@ import PGowners from "./Components/admin/pages/PGowners";
 import Property from "./Components/admin/pages/Property";
 import Users from "./Components/admin/pages/Users";
 import Bookings from "./Components/admin/pages/Bookings";
-
-
-
-
-
-
-
+import Add from "./Components/admin/city/Add";
+import Manage from "./Components/admin/city/Manage";
+import PgownerLayout from "./Components/Layout/PGownerLayout";
+import Addproperty from "./Components/PGowner/property/Addproperty";
+import Manageproperty from "./Components/PGowner/property/Manageproperty";
 
 
 function App() {
@@ -58,8 +55,8 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
   <Route index element={<Dashboard />} />
 
-  <Route path="city/add" element={<AddCity />} />
-  <Route path="city/manage" element={<ManageCity />} />
+  <Route path="city/add" element={<Add />} />
+  <Route path="city/manage" element={<Manage />} />
   <Route path="city/update/:id" element={<Update />} />
 
  <Route path="users" element={<Users/>}/>
@@ -77,8 +74,16 @@ function App() {
         </Route> 
        
  
-  
+    
+ 
+        <Route path="pgowner" element={<PgownerLayout />}>
+  <Route index element={<Dashboard />} />
 
+  <Route path="property/add property" element={<Addproperty/>} />
+  <Route path="property/manage property" element={<Manageproperty/>}/>
+  {/* <Route path="city/manage" element={<Manage />} /> */}
+  {/* <Route path="city/update/:id" element={<Update />} /> */}
+</Route>
           
 
 
