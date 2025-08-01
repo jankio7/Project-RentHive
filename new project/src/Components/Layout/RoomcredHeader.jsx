@@ -21,13 +21,13 @@ export default function RoomCredHeader() {
           <nav id="navmenu" className="navmenu">
             <ul>
               <li>
-                <Link to="/roomcred/view">View Rooms</Link>
+                <Link to="admin/roomcred/view">View Rooms</Link>
               </li>
               <li>
-                <Link to="/roomcred/add">Add Room</Link>
+                <Link to="admin/roomcred/add">Add Room</Link>
               </li>
               <li>
-                <Link to="/oomcred/profile">My Profile</Link>
+                <Link to="admin/roomcred/profile">My Profile</Link>
               </li>
               {isLogin ? (
                 <li className="nav-items">

@@ -54,7 +54,7 @@ export default function Login(){
   const signInGoogle=()=>{
     let provider=new GoogleAuthProvider()
     signInWithPopup(auth,provider)
-    .then((userCred)=>{
+    .then((userCred)=>{ 
       console.log(userCred.user.uid);
       toast.success("Login successfully")
       sessionStorage.setItem("isLogin", "true");

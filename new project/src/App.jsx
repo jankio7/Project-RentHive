@@ -22,6 +22,7 @@ import ManageUsers from "./Components/admin/users/ManageUsers"
 import Dashboard from "./Components/admin/Dashboard";
 import RoomcredLayout from "./Components/Layout/RoomcredLayout";
 import AddRoom from "./Components/admin/Roomcred/AddRoom";
+import Viewrooms from "./Components/admin/roomcred/Viewrooms";
 
 
 
@@ -65,6 +66,7 @@ function App() {
      
       <Route path="/admin/roomcred" element={<RoomcredLayout />}>
   <Route path="addroom" element={<AddRoom/>} />
+  <Route path="viewroom" element={<Viewrooms/>}/>
 </Route>
      
       
