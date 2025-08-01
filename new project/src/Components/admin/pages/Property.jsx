@@ -9,8 +9,8 @@ export default function Property() {
       title: "Cozy Apartment",
       size: "1200 sqft",
       images: [
-        "public/assets/img/about-company-2.jpg",
-        "https://via.placeholder.com/80"
+        // "public/assets/img/about-company-2.jpg",
+        // "https://via.placeholder.com/80"
       ],
       status: "Available",
       price: "₹15,000/month",
@@ -23,7 +23,7 @@ export default function Property() {
       title: "Luxury Villa",
       size: "3500 sqft",
       images: [
-        "https://via.placeholder.com/80"
+        // "https://via.placeholder.com/80"
       ],
       status: "Booked",
       price: "₹1,50,000/month",
