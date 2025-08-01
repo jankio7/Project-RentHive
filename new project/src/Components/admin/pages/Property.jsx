@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function Property() {
-  // Sample dummy data
+
   const [properties, setProperties] = useState([
     {
       id: 1,
@@ -9,7 +9,7 @@ export default function Property() {
       title: "Cozy Apartment",
       size: "1200 sqft",
       images: [
-        "https://via.placeholder.com/80", 
+        "public/assets/img/about-company-2.jpg",
         "https://via.placeholder.com/80"
       ],
       status: "Available",
@@ -82,13 +82,13 @@ export default function Property() {
                 <td className="border px-3 py-2 space-x-2">
                   <button
                     onClick={() => alert("Edit functionality pending")}
-                    className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    className="px-2 py-1 mb-2 bg-blue-500 text-black rounded hover:bg-blue-600"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(prop.id)}
-                    className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                    className="px-2 py-1 bg-red-500 text-black rounded hover:bg-red-600"
                   >
                     Delete
                   </button>
