@@ -58,7 +58,7 @@ export default function Dashboard(){
               <h3 className="heading">Total Rooms</h3>
               <h1>{room}</h1>
               <Link
-                to={"/admin/roomcred/addroom"}
+                to={"/admin/roomcred/viewrooms"}
                 className="btn-custom d-flex align-items-center justify-content-center"
               >
                 <span className="fa fa-chevron-right" />

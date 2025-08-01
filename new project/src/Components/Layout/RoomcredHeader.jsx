@@ -23,12 +23,7 @@ export default function RoomCredHeader() {
               <li>
                 <Link to="admin/roomcred/view">View Rooms</Link>
               </li>
-              <li>
-                <Link to="admin/roomcred/add">Add Room</Link>
-              </li>
-              <li>
-                <Link to="admin/roomcred/profile">My Profile</Link>
-              </li>
+
               {isLogin ? (
                 <li className="nav-items">
                   <Link to="#" onClick={handleLogout} className="nav-link">

@@ -55,19 +55,33 @@ export default function AdminHeader(){
                       <li><Link to="/admin/city/manage">Manage city</Link></li>
                     </ul>
                     </li>
-  <li>
-                    <Link to="/admin/ManagePGowners">Manage PGowners</Link>
+
+   <li className="dropdown">
+                    <Link to = " ">Manage<i className="=bi bi-chevron-dropdown toggle-dropdown-indicator">
+                      </i></Link>
+                 
+                
+                    <ul>
+                      <li><Link to="/admin/PGowners">PGowners</Link></li>
+                      <li><Link to="/admin/property">Property</Link></li>
+                      <li><Link to="admin/bookings">Bookings</Link></li>
+                    </ul>
+                    </li>
+
+                    
+  {/* <li> */}
+                    {/* <Link to="/admin/ManagePGowners">Manage PGowners</Link>
                   </li>
                   <li>
                     <Link to="/admin/Manageproperty">Manage property</Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/admin/users/ManageUsers">Manage Users</Link>
                   </li>
                  
-                      <li>
+                      {/* <li>
                     <Link to="/admin/Managebookings">Manage Bookings</Link>
-                  </li>
+                  </li> */}
                    {
                     isLogin? (
                     <li className="nav-items">

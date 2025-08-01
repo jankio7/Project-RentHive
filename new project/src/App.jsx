@@ -17,12 +17,14 @@ import PGowner from "./Components/auth/PGowner";
 import AddCity from "./Components/admin/city/AddCity";
 import ManageCity from "./Components/admin/city/ManageCity";
 import Update from "./Components/admin/city/Update";
-import ManagePGowners from "./Components/admin/ManagePGowner";
+
 import ManageUsers from "./Components/admin/users/ManageUsers"
 import Dashboard from "./Components/admin/Dashboard";
 import RoomcredLayout from "./Components/Layout/RoomcredLayout";
-import AddRoom from "./Components/admin/Roomcred/AddRoom";
 import Viewrooms from "./Components/admin/roomcred/Viewrooms";
+import PGowners from "./Components/admin/pages/PGowners";
+import Property from "./Components/admin/pages/Property";
+
 
 
 
@@ -50,27 +52,28 @@ function App() {
           </Route>
 
 
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Dashboard/>}/>
-             
-             <Route path="city/add" element={<AddCity/>}/>
-             <Route path="city/manage" element={<ManageCity/>}/>
-             <Route path="city/update/:id" element={<Update/>}/>
-            <Route path="ManagePGowners" element={<ManagePGowners/>}/>
-             <Route path="users">
-           <Route path="manageUsers" element={<ManageUsers/>} />
-          </Route>
-        </Route>
+        
+        <Route path="/admin" element={<AdminLayout />}>
+  <Route index element={<Dashboard />} />
 
+  <Route path="city/add" element={<AddCity />} />
+  <Route path="city/manage" element={<ManageCity />} />
+  <Route path="city/update/:id" element={<Update />} />
 
-     
-      <Route path="/admin/roomcred" element={<RoomcredLayout />}>
-  <Route path="addroom" element={<AddRoom/>} />
-  <Route path="viewroom" element={<Viewrooms/>}/>
+  <Route path="manageUsers" element={<ManageUsers />} />
+
+  {/* ✅ ADD THIS INSIDE */}
+  <Route path="PGowners" element={<PGowners />} />
+  <Route path="Property" element={<Property/>}/>
 </Route>
+
      
-      
-      
+       <Route path="/admin/roomcred" element={<RoomcredLayout />}>
+
+         <Route path="viewrooms" element={<Viewrooms/>}/>
+        </Route> 
+       
+ 
   
 
           

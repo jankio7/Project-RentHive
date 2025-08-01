@@ -1,9 +1,9 @@
 import { collection, onSnapshot, deleteDoc, doc, query,where} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { db } from "../../Firebase";
+import { db } from "../../../Firebase";
 
-export default function ManagePGowners() {
+export default function PGowners() {
   const [pgowners, setPgowners] = useState([]);
 
   // useEffect(() => {
