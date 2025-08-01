@@ -17,13 +17,15 @@ import PGowner from "./Components/auth/PGowner";
 import AddCity from "./Components/admin/city/AddCity";
 import ManageCity from "./Components/admin/city/ManageCity";
 import Update from "./Components/admin/city/Update";
-
-import ManageUsers from "./Components/admin/users/ManageUsers"
 import Dashboard from "./Components/admin/Dashboard";
 import RoomcredLayout from "./Components/Layout/RoomcredLayout";
 import Viewrooms from "./Components/admin/roomcred/Viewrooms";
 import PGowners from "./Components/admin/pages/PGowners";
 import Property from "./Components/admin/pages/Property";
+import Users from "./Components/admin/pages/Users";
+import Bookings from "./Components/admin/pages/Bookings";
+
+
 
 
 
@@ -60,11 +62,12 @@ function App() {
   <Route path="city/manage" element={<ManageCity />} />
   <Route path="city/update/:id" element={<Update />} />
 
-  <Route path="manageUsers" element={<ManageUsers />} />
+ <Route path="users" element={<Users/>}/>
 
-  {/* ✅ ADD THIS INSIDE */}
+ 
   <Route path="PGowners" element={<PGowners />} />
   <Route path="Property" element={<Property/>}/>
+   <Route path="bookings" element={<Bookings/>}/>
 </Route>
 
      

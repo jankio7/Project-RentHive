@@ -7,7 +7,7 @@ import Swal from "sweetalert2"
 import Switch from "react-switch"
 
 
-export default function ManageUsers(){
+export default function Users(){
     const [load, setLoad]=useState(false)
     const [users, setUsers]=useState([])
     // useEffect(fn, [dependency])
@@ -29,7 +29,7 @@ export default function ManageUsers(){
                
                 Swal.fire({
                 title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                text: "You want to block this!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -44,8 +44,7 @@ export default function ManageUsers(){
                     .then(()=>{
                         Swal.fire({
                         title: `${status?"Blocked":"Un-blocked"}`,
-                        // text: "Your file has been deleted.",
-                        icon: "success"
+                      icon: "success"
                         });
         
                     }).catch((error)=>{

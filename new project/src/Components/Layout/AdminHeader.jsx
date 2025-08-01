@@ -76,7 +76,7 @@ export default function AdminHeader(){
                     <Link to="/admin/Manageproperty">Manage property</Link>
                   </li> */}
                   <li>
-                    <Link to="/admin/users/ManageUsers">Manage Users</Link>
+                    <Link to="/admin/Users">Users</Link>
                   </li>
                  
                       {/* <li>
