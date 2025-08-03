@@ -40,26 +40,26 @@ export default function Navbar(){
       <nav id="navmenu" className="navmenu">
         <ul>
           <li>
-            <Link to="index.html" className="active">
+            <Link to="index.html">
               Home
             </Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/users/viewcity">View City</Link>
           </li>
           <li>
-            <Link to="/services">Services</Link>
+            <Link to="/users/services">View Rooms</Link>
           </li>
           <li>
-            <Link to="/properties">Properties</Link>
+            <Link to="/users/bookandpay">Book and Pay</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/agents">Agents</Link>
           </li>
      
           <li>
             <Link to ="contact">Contact</Link>
-          </li>
+          </li> */}
           {
           isLogin?
          <li className="nav-item">

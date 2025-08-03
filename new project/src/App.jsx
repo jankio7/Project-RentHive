@@ -11,7 +11,7 @@ import Contact from "./Components/Pages/Contact";
 import Error from "./Components/Pages/Error";
 import Login from "./Components/auth/Login";
 import AdminLayout from "./Components/Layout/AdminLayout";
-import Register from "./Components/auth/Register";
+import Register from "./Components/auth/UserRegister";
 import { ToastContainer } from "react-toastify";
 import PGowner from "./Components/auth/PGowner";
 
@@ -28,6 +28,7 @@ import Manage from "./Components/admin/city/Manage";
 import PgownerLayout from "./Components/Layout/PGownerLayout";
 import Addproperty from "./Components/PGowner/property/Addproperty";
 import Manageproperty from "./Components/PGowner/property/Manageproperty";
+import ViewCity from "./Components/users/ViewCity";
 
 
 function App() {
@@ -37,17 +38,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-             <Route path="about" element={<About />} />
+             {/* <Route path="about" element={<About />} />
             <Route path="properties" element={<Properties />} />
             <Route path="properitysingle" element={<Propertysingle />} />
-            <Route path="services" element={<Services />} />
-            <Route path="servicesdetails" element={<Servicedetails />} />
+            <Route path="services" element={<Services />} /> */}
+            {/* <Route path="servicesdetails" element={<Servicedetails />} />
             <Route path="agents" element={<Agents />} />
-            <Route path="contact" element={<Contact />} />
+            <Route path="contact" element={<Contact />} /> */}
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="pgowner" element={<PGowner />} />
-           
+            {/* <Route path="pgowner" element={<PGowner />} /> */}
+             <Route path="/users/viewcity" element={<ViewCity/>}/>
           </Route>
 
 

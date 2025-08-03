@@ -230,7 +230,7 @@ export default function Services(){
     </section>
     {/* /Services Section */}
   </main>
-  <footer id="footer" className="footer light-background">
+  {/* <footer id="footer" className="footer light-background">
     <div className="container">
       <div className="row gy-3">
         <div className="col-lg-3 col-md-6 d-flex">
@@ -294,7 +294,7 @@ export default function Services(){
 Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
     </div>
-  </footer>
+  </footer> */}
   {/* Scroll Top */}
   <a
     href="#"

@@ -119,7 +119,7 @@ export default function Property() {
 
 
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, "properties"), (snapshot) => {
+    const unsub = onSnapshot(collection(db, "property"), (snapshot) => {
       const list = snapshot.docs.map((doc, index) => ({
         id: doc.id,
         sno: index + 1,
@@ -144,14 +144,14 @@ const handleDelete = async (id) => {
     });
 
     if (result.isConfirmed) {
-      await deleteDoc(doc(db, "properties", id));
+      await deleteDoc(doc(db, "property", id));
       Swal.fire("Deleted!", "Property has been deleted.", "success");
     }
   };
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4">Manage Properties</h2>
+      <h2 className="text-2xl font-semibold mb-4"> Properties</h2>
       <div className="overflow-x-auto">
                   <h3 className="mb-4">Property</h3>
 
@@ -162,47 +162,46 @@ const handleDelete = async (id) => {
               <th className="border px-3 py-2">Owner</th>
               <th className="border px-3 py-2">Title</th>
               <th className="border px-3 py-2">Size</th>
-              <th className="border px-3 py-2">Images</th>
               <th className="border px-3 py-2">Status</th>
+              <th className="border px-3 py-2">Ac</th>
+              <th className="border px-3 py-2">Food</th>
+              <th className="border px-3 py-2">Balcony</th>
+              <th className="border px-3 py-2">Type</th>
               <th className="border px-3 py-2">Price</th>
-              <th className="border px-3 py-2">Description</th>
               <th className="border px-3 py-2">City</th>
-              <th className="border px-3 py-2">Action</th>
+              <th className="border px-3 py-2">Image</th>
+              <th className="border px-3 py-2">Action</th>   
             </tr>
           </thead>
           <tbody>
             {properties.map((prop, index) => (
               <tr key={prop.id} className="text-center border-b">
                 <td className="border px-3 py-2">{index + 1}</td>
-           <td className="border px-3 py-2">{prop.owner}</td>
-
+                <td className="border px-3 py-2">{prop.owner}</td>
                 <td className="border px-3 py-2">{prop.title}</td>
                 <td className="border px-3 py-2">{prop.size}</td>
-                <td className="border px-3 py-2 flex flex-wrap justify-center gap-1">
-                  {prop.images && prop.images.length > 0 ? (
-                    prop.images.map((img, i) => (
-                      <img
-                        key={i}
-                        src={img}
-                        alt={`Property ${prop.title} ${i + 1}`}
-                        className="w-16 h-12 object-cover rounded"
-                      />
-                    ))
+                <td className="border px-3 py-2">{prop.status}</td>
+                <td className="border px-3 py-2">{prop.ac}</td>
+                <td className="border px-3 py-2">{prop.food}</td>
+                <td className="border px-3 py-2">{prop.balcony}</td>
+                <td className="border px-3 py-2">{prop.type}</td>
+                <td className="border px-3 py-2">{prop.price}</td>
+                <td className="border px-3 py-2">{prop.city}</td>
+                <td className="border px-3 py-2">
+                  {prop.image ? (
+                    <img
+                      src={prop.image}
+                      alt={prop.title}
+                      style={{ width: "100px", height: "auto" }}
+                    />
                   ) : (
-                    <span className="text-gray-400">No images</span>
+                    <span className="text-gray-400">No Image</span>
                   )}
                 </td>
-                <td className="border px-3 py-2">{prop.status}</td>
-                <td className="border px-3 py-2">{prop.price}</td>
-                <td className="border px-3 py-2">{prop.description}</td>
-                <td className="border px-3 py-2">{prop.city}</td>
                 <td className="border px-3 py-2 space-x-2">
                   <button
                     onClick={() => handleDelete(prop.id)}
-                 
-                        className="btn btn-danger btn-sm"
-                      
-                  
+                    className="btn btn-danger btn-sm"
                   >
                     Delete
                   </button>
@@ -211,7 +210,7 @@ const handleDelete = async (id) => {
             ))}
             {properties.length === 0 && (
               <tr>
-                <td colSpan="10" className="py-4 text-center text-gray-500">
+                <td colSpan="13" className="py-4 text-center text-gray-500">
                   No properties found.
                 </td>
               </tr>

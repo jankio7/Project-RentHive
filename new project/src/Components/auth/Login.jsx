@@ -95,11 +95,13 @@ export default function Login(){
             </div>
         </section>
             <div className="container my-5">
-            {/* contact form */}
-            <div className="row no-gutters">
-              <div className="col-md-7">
+              
+                 {/* contact form */}
+            <div className="row justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
+
+              <div className="col-md-7 mt-5" style={{ boxShadow: "0px 0px 15px gray" }}>
                 <div className="contact-wrap w-100 p-md-5 p-4">
-                  <h3 className="mb-4">Login</h3>
+                  <h3 className="mb-4 text-center">Login</h3>
                   <form
                     method="POST"
                     id="contactForm"
@@ -145,7 +147,7 @@ export default function Login(){
                       </div>
                    
                       <div className="col-md-12">
-                        <div className="form-group">
+                        <div className="form-group text-center">
                           <input
                             type="submit"
                             defaultValue="Submit"
@@ -156,9 +158,11 @@ export default function Login(){
                       </div>
                     </div>
                   </form>
-      <button type="button" onClick={signInGoogle}className="btn btn-danger"> 
-        <i class="bi bi-google">Sign In With google</i>
+                  <div className="text-center">
+              <button type="button " onClick={signInGoogle}className="btn btn-danger mt-2"> 
+             <i class="bi bi-google">Sign In With google</i>
                   </button>
+                  </div>
                   {/* {email} */}
                   <div>Don't have an account? <Link to={"/register"}>Register Here!</Link></div>
                 
@@ -170,7 +174,7 @@ export default function Login(){
                   // style={{ backgroundImage: "url(/assets/images/img.jpg)" }}
                 ></div> */}
               </div>
-            </div>
+             </div>
             </div>
 
     </>

@@ -229,7 +229,7 @@ export default function Manageproperty() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "properties"), (snapshot) => {
+    const unsubscribe = onSnapshot(collection(db, "property"), (snapshot) => {
       const propertyList = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -244,7 +244,7 @@ export default function Manageproperty() {
   const DeleteProperty = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won’t be able to revert this!",
+      text: "You want to delete this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -253,7 +253,7 @@ export default function Manageproperty() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await deleteDoc(doc(db, "properties", id));
+          await deleteDoc(doc(db, "property", id));
           toast.success("Deleted successfully!");
         } catch (err) {
           toast.error("Delete failed: " + err.message);
@@ -296,62 +296,68 @@ export default function Manageproperty() {
           <div className="row justify-content-center no-gutters">
             <div className="col-md-12" style={{ boxShadow: "0px 0px 15px gray" }}>
               <div className="contact-wrap w-100 p-md-5 p-4">
-                <h3 className="mb-4">Manage PG Properties</h3>
+                <h3 className="mb-4">Properties</h3>
                 <table className="table table-striped">
                   <thead>
                     <tr>
                       <th>#</th>
+                      <th>Owner</th>
                       <th>Title</th>
                       <th>Size</th>
+                      <th>Status</th>
                       <th>AC</th>
-                      <th>Non-AC</th>
+                      <th>Food</th>
                       <th>Balcony</th>
                       <th>Type</th>
                       <th>Price</th>
+                      <th>City</th>
                       <th>Image</th>
                       <th>Action</th>
                     </tr>
-                  </thead>
-                  <tbody>
+                     </thead>
+                    <tbody>
                     {data.map((el, index) => (
-                      <tr key={el.id}>
-                        <td>{index + 1}</td>
-                        <td>{el.title || "N/A"}</td>
-                        <td>{el.size || "N/A"}</td>
-                        <td>{el.ac}</td>
-                        <td>{el.nonAc}</td>
-                        <td>{el.balcony}</td>
-                        <td>{el.type}</td>
-                        <td>{el.price}</td>
-                        <td>
-                          {el.image ? (
-                            <img
-                              src={el.image}
-                              alt={el.title}
-                              style={{ width: "100px", height: "auto" }}
-                            />
-                          ) : (
-                            "No Image"
-                          )}
-                        </td>
-                        <td>
-                          <Link
-                            to={`/Pgowner/property/update/${el.id}`}
-                            className="btn btn-outline-success mx-2"
-                          >
-                            Edit
-                          </Link>
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => Delete(el.id)}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                 <tr key={el.id}>
+                            <td>{index + 1}</td>
+                            <td>{el.owner}</td>
+                            <td>{el.title || "N/A"}</td>
+                            <td>{el.size || "N/A"}</td>
+                            <td>{el.status}</td>
+                            <td>{el.ac}</td>
+                            <td>{el.food}</td>
+                            <td>{el.balcony}</td> {/* was: el.city */}
+                            <td>{el.type}</td>     {/* was: el.balcony */}
+                            <td>{el.price}</td>    {/* was: el.type */}
+                            <td>{el.city}</td>     {/* was: el.price */}
+                            <td>
+                         {el.image ? (
+                      <img
+                       src={el.image}
+                       alt={el.title}
+                       style={{ width: "100px", height: "auto" }}
+                      />
+                      ) : (
+                       "No Image"
+                    )}
+                </td> 
+                    <td>
+                    <Link
+                  to={`/Pgowner/property/update/${el.id}`}
+                  className="btn btn-outline-success mx-2"
+                   >
+                 Edit
+                  </Link>
+                <button
+                className="btn btn-danger"
+               onClick={() => DeleteProperty(el.id)}
+                     >
+                    Delete
+                 </button>
+                  </td>
+                 </tr>
+                ))}
+                 </tbody>
+               </table>
               </div>
             </div>
           </div>

@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { use, useState } from "react";
+import {toast } from "react-toastify";
 import axios from "axios";
-import { PulseLoader } from "react-spinners";
 import { db } from "../../../Firebase";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
 
 export default function Addproperty() {
   const [title, setTitle] = useState("");
@@ -10,11 +10,13 @@ export default function Addproperty() {
   const [imageName, setImageName] = useState("");
   const [size, setSize] = useState("");
   const [ac, setAc] = useState("No");
-  const [nonAc, setNonAc] = useState("No");
+  const [city, setCity] = useState([]);
   const [balcony, setBalcony] = useState("No");
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [owner, setowner] = useState([]);
+  const [food, setFood] = useState("No");
+  const [status, setStatus]= useState("booked");
 
   const handleImageChange = (e) => {
     setImageName(e.target.value);
@@ -23,7 +25,7 @@ export default function Addproperty() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+  
 
     try {
       const formData = new FormData();
@@ -38,35 +40,27 @@ export default function Addproperty() {
       const imageUrl = res.data.secure_url;
 
       const propertyData = {
+        owner,
         title,
+        
         image: imageUrl,
         size,
+        status,
         ac,
-        nonAc,
+        food,
+        city,
         balcony,
         type,
         price,
+       
         createdAt: Timestamp.now(),
       };
 
       await addDoc(collection(db, "property"), propertyData);
       toast.success("Property added successfully!");
-
-      // reset form
-      setTitle("");
-      setImage(null);
-      setImageName("");
-      setSize("");
-      setAc("No");
-      setNonAc("No");
-      setBalcony("No");
-      setType("");
-      setPrice("");
     } catch (error) {
       toast.error("Error uploading property: " + error.message);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   return (
@@ -93,19 +87,11 @@ export default function Addproperty() {
         </div>
       </section>
 
-      {/* Main Form Section */}
-      <div className="container my-5">
-        {loading ? (
-          <PulseLoader
-            color="#4bc4daff"
-            size={30}
-            cssOverride={{ display: "block", margin: "0 auto" }}
-          />
-        ) : (
+       
           <div className="row justify-content-center no-gutters">
-            <div className="col-md-7" style={{ boxShadow: "0px 0px 15px gray" }}>
+            <div className="col-md-7 mt-5" style={{ boxShadow: "0px 0px 15px gray" }}>
               <div className="contact-wrap w-100 p-md-5 p-4">
-                <h3 className="mb-4 text-center">Add PG Property</h3>
+                <h3 className="mb-4 text-center">Add Property</h3>
                 <form onSubmit={handleSubmit} className="contactForm">
                   <div className="row">
                     {/* Title */}
@@ -152,9 +138,20 @@ export default function Addproperty() {
                         />
                       </div>
                     </div>
+                        
+                          {/* status */}
+                    <div className="col-md-4">
+                      <div className="form-group">
+                        <label className="label">Status</label>
+                        <select className="form-control" value={status} onChange={(e) => setStatus(e.target.value)}>
+                          <option value="Booked">Booked</option>
+                          <option value="Available">Available</option>
+                        </select>
+                      </div>
+                    </div>
 
                     {/* AC */}
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                       <div className="form-group">
                         <label className="label">AC Room</label>
                         <select className="form-control" value={ac} onChange={(e) => setAc(e.target.value)}>
@@ -164,19 +161,19 @@ export default function Addproperty() {
                       </div>
                     </div>
 
-                    {/* Non AC */}
-                    <div className="col-md-12">
+                    {/*Food */}
+                    <div className="col-md-4">
                       <div className="form-group">
-                        <label className="label">Non-AC Room</label>
-                        <select className="form-control" value={nonAc} onChange={(e) => setNonAc(e.target.value)}>
+                        <label className="label">Food</label>
+                        <select className="form-control" value={food} onChange={(e) => setFood(e.target.value)}>
                           <option value="Yes">Yes</option>
                           <option value="No">No</option>
                         </select>
                       </div>
                     </div>
-
+                   
                     {/* Balcony */}
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                       <div className="form-group">
                         <label className="label">Balcony</label>
                         <select className="form-control" value={balcony} onChange={(e) => setBalcony(e.target.value)}>
@@ -187,7 +184,7 @@ export default function Addproperty() {
                     </div>
 
                     {/* Type */}
-                    <div className="col-md-12">
+                    <div className="col-md-4">
                       <div className="form-group">
                         <label className="label">Type</label>
                         <select className="form-control" value={type} onChange={(e) => setType(e.target.value)} required>
@@ -199,7 +196,7 @@ export default function Addproperty() {
                     </div>
 
                     {/* Price */}
-                    <div className="col-md-12">
+                    <div className="col-md-6">
                       <div className="form-group">
                         <label className="label">Price (monthly)</label>
                         <input
@@ -212,6 +209,36 @@ export default function Addproperty() {
                         />
                       </div>
                     </div>
+                               
+                    {/* city */}
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label className="label">City </label>
+                         <input
+                          type="text"
+                          className="form-control"
+                          placeholder="e.g. cityname"
+                          value={city}
+                          onChange={(e) => setCity(e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {/* owner*/}
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label className="label">Owner</label>
+                         <input
+                          type="text"
+                          className="form-control"
+                          placeholder="e.g ownername"
+                          value={owner}
+                          onChange={(e) => setowner(e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
 
                     {/* Submit */}
                     <div className="col-md-12">
@@ -220,6 +247,7 @@ export default function Addproperty() {
                           type="submit"
                           className="btn btn-primary"
                           value="Submit"
+
                         />
                       </div>
                     </div>
@@ -228,8 +256,7 @@ export default function Addproperty() {
               </div>
             </div>
           </div>
-        )}
-      </div>
+        
     </>
   );
 }
