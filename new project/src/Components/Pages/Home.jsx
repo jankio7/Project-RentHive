@@ -1,4 +1,35 @@
+import { collection, doc, getDoc, limit, onSnapshot, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import {Link} from "react-router-dom"
+import { db } from "../../Firebase";
+import { PulseLoader } from "react-spinners";
 export default function Home(){
+   const [data, setData] = useState([]);
+    const [load, setLoad] = useState(true);
+    useEffect(() => {
+        var q=query(collection(db, "property"), limit(3))
+       
+        const unsubscribe = onSnapshot(q, async (snapshot) => {
+          const propertyList = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          let updateData=[]
+          for(let i=0;i<propertyList.length;i++){
+            let cityId=propertyList[i].cityId 
+            let cityDoc=await getDoc(doc(db,"cities", cityId))
+            let cityData=cityDoc.data()
+            let ownerId=propertyList[i].ownerId 
+            let ownerDoc=await getDoc(doc(db,"users", ownerId))
+            let ownerData=ownerDoc.data()
+            updateData.push({...propertyList[i], city:cityData, owner:ownerData})
+          }
+          setData(updateData);
+          setLoad(false);
+        });
+    
+        return () => unsubscribe();
+      }, []);
     return(
         <>
   
@@ -15,43 +46,13 @@ export default function Home(){
           <img src="/assets/img/hero-carousel/hero-carousel-1.jpg" alt="" />
           <div className="carousel-container">
             <div>
-              <p>Doral, Florida</p>
+              <p>Get the Best PGs.</p>
               <h2>
-                <span>204</span> Olive Road Two
+                <span>Check-Out</span> Now
               </h2>
-              <a href="property-single.html" className="btn-get-started">
-                rent | $ 12.000
-              </a>
-            </div>
-          </div>
-        </div>
-        {/* End Carousel Item */}
-        <div className="carousel-item">
-          <img src="/assets/img/hero-carousel/hero-carousel-2.jpg" alt="" />
-          <div className="carousel-container">
-            <div>
-              <p>Doral, Florida</p>
-              <h2>
-                <span>247</span> Venda Road Five
-              </h2>
-              <a href="property-single.html" className="btn-get-started">
-                sale | $ 356.000
-              </a>
-            </div>
-          </div>
-        </div>
-        {/* End Carousel Item */}
-        <div className="carousel-item">
-          <img src="/assets/img/hero-carousel/hero-carousel-3.jpg" alt="" />
-          <div className="carousel-container">
-            <div>
-              <p>Doral, Florida</p>
-              <h2>
-                <span>247</span> Vitra Road three
-              </h2>
-              <a href="property-single.html" className="btn-get-started">
-                rent | $ 3.000
-              </a>
+              <Link to="/viewpg" className="btn-get-started">
+                View Property
+              </Link>
             </div>
           </div>
         </div>
@@ -82,410 +83,37 @@ export default function Home(){
       </div>
     </section>
     {/* /Hero Section */}
-    {/* Services Section */}
-    <section id="services" className="services section">
-      {/* Section Title */}
-      <div className="container section-title" >
-        <h2>Our Services</h2>
-        <p>
-          Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-          consectetur velit
-        </p>
-      </div>
-      {/* End Section Title */}
-      <div className="container">
-        <div className="row gy-4">
-          <div
-            className="col-lg-4 col-md-6"
-            
-          >
-            <div className="service-item  position-relative">
-              <div className="icon">
-                <i className="bi bi-activity" />
-              </div>
-              <a href="service-details.html" className="stretched-link">
-                <h3>Nesciunt Mete</h3>
-              </a>
-              <p>
-                Provident nihil minus qui consequatur non omnis maiores. Eos
-                accusantium minus dolores iure perferendis tempore et
-                consequatur.
-              </p>
-            </div>
-          </div>
-          {/* End Service Item */}
-          <div
-            className="col-lg-4 col-md-6"
-          
-          >
-            <div className="service-item position-relative">
-              <div className="icon">
-                <i className="bi bi-broadcast" />
-              </div>
-              <a href="service-details.html" className="stretched-link">
-                <h3>Eosle Commodi</h3>
-              </a>
-              <p>
-                Ut autem aut autem non a. Sint sint sit facilis nam iusto sint.
-                Libero corrupti neque eum hic non ut nesciunt dolorem.
-              </p>
-            </div>
-          </div>
-          {/* End Service Item */}
-          <div
-            className="col-lg-4 col-md-6"
-            
-          >
-            <div className="service-item position-relative">
-              <div className="icon">
-                <i className="bi bi-easel" />
-              </div>
-              <a href="service-details.html" className="stretched-link">
-                <h3>Ledo Markt</h3>
-              </a>
-              <p>
-                Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus
-                ea aut. Vel qui id voluptas adipisci eos earum corrupti.
-              </p>
-            </div>
-          </div>
-          {/* End Service Item */}
-          <div
-            className="col-lg-4 col-md-6"
-           
-          >
-            <div className="service-item position-relative">
-              <div className="icon">
-                <i className="bi bi-bounding-box-circles" />
-              </div>
-              <a href="service-details.html" className="stretched-link">
-                <h3>Asperiores Commodit</h3>
-              </a>
-              <p>
-                Non et temporibus minus omnis sed dolor esse consequatur.
-                Cupiditate sed error ea fuga sit provident adipisci neque.
-              </p>
-              <a href="service-details.html" className="stretched-link" />
-            </div>
-          </div>
-          {/* End Service Item */}
-          <div
-            className="col-lg-4 col-md-6"
-        
-          >
-            <div className="service-item position-relative">
-              <div className="icon">
-                <i className="bi bi-calendar4-week" />
-              </div>
-              <a href="service-details.html" className="stretched-link">
-                <h3>Velit Doloremque</h3>
-              </a>
-              <p>
-                Cumque et suscipit saepe. Est maiores autem enim facilis ut aut
-                ipsam corporis aut. Sed animi at autem alias eius labore.
-              </p>
-              <a href="service-details.html" className="stretched-link" />
-            </div>
-          </div>
-          {/* End Service Item */}
-          <div
-            className="col-lg-4 col-md-6"
-         
-          >
-            <div className="service-item position-relative">
-              <div className="icon">
-                <i className="bi bi-chat-square-text" />
-              </div>
-              <a href="service-details.html" className="stretched-link">
-                <h3>Dolori Architecto</h3>
-              </a>
-              <p>
-                Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque
-                non et debitis iure. Corrupti recusandae ducimus enim.
-              </p>
-              <a href="service-details.html" className="stretched-link" />
-            </div>
-          </div>
-          {/* End Service Item */}
-        </div>
-      </div>
-    </section>
-    {/* /Services Section */}
-    {/* Agents Section */}
-    <section id="agents" className="agents section">
-      {/* Section Title */}
-      <div className="container section-title">
-        <h2>Our Agents</h2>
-        <p>
-          Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-          consectetur velit
-        </p>
-      </div>
-      {/* End Section Title */}
-      <div className="container">
-        <div className="row gy-5">
-          <div
-            className="col-lg-4 col-md-6"
-            
-          >
-            <div className="member">
-              <div className="pic">
-                <img
-                  src="/assets/img/team/team-1.jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div className="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Executive Officer</span>
-                <div className="social">
-                  <a href="">
-                    <i className="bi bi-twitter-x" />
-                  </a>
-                  <a href="">
-                    <i className="bi bi-facebook" />
-                  </a>
-                  <a href="">
-                    <i className="bi bi-instagram" />
-                  </a>
-                  <a href="">
-                    <i className="bi bi-linkedin" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* End Team Member */}
-          <div
-            className="col-lg-4 col-md-6"
-          
-          >
-            <div className="member">
-              <div className="pic">
-                <img
-                  src="/assets/img/team/team-2.jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div className="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Rent Manager</span>
-                <div className="social">
-                  <a href="">
-                    <i className="bi bi-twitter-x" />
-                  </a>
-                  <a href="">
-                    <i className="bi bi-facebook" />
-                  </a>
-                  <a href="">
-                    <i className="bi bi-instagram" />
-                  </a>
-                  <a href="">
-                    <i className="bi bi-linkedin" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* End Team Member */}
-          <div
-            className="col-lg-4 col-md-6"
-            
-          >
-            <div className="member">
-              <div className="pic">
-                <img
-                  src="/assets/img/team/team-3.jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div className="member-info">
-                <h4>William Anderson</h4>
-                <span>
-                  Sale manager
-                  <br />
-                </span>
-                <div className="social">
-                  <a href="">
-                    <i className="bi bi-twitter-x" />
-                  </a>
-                  <a href="">
-                    <i className="bi bi-facebook" />
-                  </a>
-                  <a href="">
-                    <i className="bi bi-instagram" />
-                  </a>
-                  <a href="">
-                    <i className="bi bi-linkedin" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* End Team Member */}
-        </div>
-      </div>
-    </section>
-    {/* /Agents Section */}
-    {/* Testimonials Section */}
-    <section id="testimonials" className="testimonials section">
-      {/* Section Title */}
-      <div className="container section-title">
-        <h2>Testimonials</h2>
-        <p>
-          Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-          consectetur velit
-        </p>
-      </div>
-      {/* End Section Title */}
-      <div className="container" >
-        <div className="swiper init-swiper">
-          <div className="swiper-wrapper">
-            <div className="swiper-slide">
-              <div className="testimonial-item">
-                <div className="stars">
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                </div>
-                <p>
-                  Proin iaculis purus consequat sem cure digni ssim donec
-                  porttitora entum suscipit rhoncus. Accusantium quam, ultricies
-                  eget id, aliquam eget nibh et. Maecen aliquam, risus at
-                  semper.
-                </p>
-                <div className="profile mt-auto">
-                  <img
-                    src="/assets/img/testimonials/testimonials-1.jpg"
-                    className="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Saul Goodman</h3>
-                  <h4>Ceo &amp; Founder</h4>
-                </div>
-              </div>
-            </div>
-            {/* End testimonial item */}
-            <div className="swiper-slide">
-              <div className="testimonial-item">
-                <div className="stars">
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                </div>
-                <p>
-                  Export tempor illum tamen malis malis eram quae irure esse
-                  labore quem cillum quid cillum eram malis quorum velit fore
-                  eram velit sunt aliqua noster fugiat irure amet legam anim
-                  culpa.
-                </p>
-                <div className="profile mt-auto">
-                  <img
-                    src="/assets/img/testimonials/testimonials-2.jpg"
-                    className="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Sara Wilsson</h3>
-                  <h4>Designer</h4>
-                </div>
-              </div>
-            </div>
-            {/* End testimonial item */}
-            <div className="swiper-slide">
-              <div className="testimonial-item">
-                <div className="stars">
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                </div>
-                <p>
-                  Enim nisi quem export duis labore cillum quae magna enim sint
-                  quorum nulla quem veniam duis minim tempor labore quem eram
-                  duis noster aute amet eram fore quis sint minim.
-                </p>
-                <div className="profile mt-auto">
-                  <img
-                    src="/assets/img/testimonials/testimonials-3.jpg"
-                    className="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Jena Karlis</h3>
-                  <h4>Store Owner</h4>
-                </div>
-              </div>
-            </div>
-            {/* End testimonial item */}
-            <div className="swiper-slide">
-              <div className="testimonial-item">
-                <div className="stars">
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                </div>
-                <p>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa
-                  multos export minim fugiat minim velit minim dolor enim duis
-                  veniam ipsum anim magna sunt elit fore quem dolore labore
-                  illum veniam.
-                </p>
-                <div className="profile mt-auto">
-                  <img
-                    src="a/ssets/img/testimonials/testimonials-4.jpg"
-                    className="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Matt Brandon</h3>
-                  <h4>Freelancer</h4>
-                </div>
-              </div>
-            </div>
-            {/* End testimonial item */}
-            <div className="swiper-slide">
-              <div className="testimonial-item">
-                <div className="stars">
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                  <i className="bi bi-star-fill" />
-                </div>
-                <p>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua
-                  veniam tempor noster veniam enim culpa labore duis sunt culpa
-                  nulla illum cillum fugiat legam esse veniam culpa fore nisi
-                  cillum quid.
-                </p>
-                <div className="profile mt-auto">
-                  <img
-                    src="/assets/img/testimonials/testimonials-5.jpg"
-                    className="testimonial-img"
-                    alt=""
-                  />
-                  <h3>John Larson</h3>
-                  <h4>Entrepreneur</h4>
-                </div>
-              </div>
-            </div>
-            {/* End testimonial item */}
-          </div>
-          <div className="swiper-pagination" />
-        </div>
-      </div>
-    </section>
-    {/* /Testimonials Section */}
+ 
+
+  
   </main>
-<a
+      <div className="container my-5">
+      {load? 
+      <div className="d-flex justify-content-center">
+      <PulseLoader  size={30} loading={load} color="#00bd56" />
+      </div>
+      :
+      <div className="row">
+        {data?.map((el,index)=>(
+        <div className="col-md-4 p-3">
+          <div className="card mt-5 " style={{  cursor: 'pointer' , boxShadow: "0px 0px 15px gray"}} 
+            >
+              <img src={el?.image} className="card-img-top w-100" alt={''} style={{ height: '250px', objectFit: 'cover' }} />
+              <div className="card-body">
+                <h5 className="card-title text-center">{el?.title}</h5>
+                <h6 className="card-title text-center">&#8377;{el?.price}</h6>
+                <Link className="btn btn-outline-primary d-block mx-auto" to={`/viewpgDetails/${el.id}`}>Explore</Link>
+              </div>
+            </div>
+        </div>
+        ))}
+        <Link to={"/viewpg"} className="d-block w-25 mx-auto btn btn-primary">View More</Link>
+      </div>
+}
+</div>
+  {/* Scroll Top */}
+  <a
+
     href="#"
     id="scroll-top"
     className="scroll-top d-flex align-items-center justify-content-center"
