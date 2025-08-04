@@ -1,13 +1,8 @@
-import About from "./Components/Pages/About"
+
 import Home from "./Components/Pages/Home"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
-import Services from "./Components/Pages/Services";
-import Servicedetails from "./Components/Pages/Servicesdetails";
-import Propertysingle from "./Components/Pages/Propertysingle";
-import Properties from "./Components/Pages/Properties";
-import Agents from "./Components/Pages/Agents";
-import Contact from "./Components/Pages/Contact";
+
 import Error from "./Components/Pages/Error";
 import Login from "./Components/auth/Login";
 import AdminLayout from "./Components/Layout/AdminLayout";
@@ -44,62 +39,55 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-             {/* <Route path="about" element={<About />} />
-            <Route path="properties" element={<Properties />} />
-            <Route path="properitysingle" element={<Propertysingle />} />
-            <Route path="services" element={<Services />} /> */}
-            {/* <Route path="servicesdetails" element={<Servicedetails />} />
-            <Route path="agents" element={<Agents />} />
-            <Route path="contact" element={<Contact />} /> */}
+            
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="pg-register" element={<PGowner />} />
-             <Route path="users/viewcity" element={<ViewCity/>}/>
-             <Route path="viewpg/:cityId" element={<PGCard/>}/>
-             <Route path="viewpg" element={<PGCard/>}/>
-             <Route path="viewpgdetails/:id" element={<PGDetails/>}/>
-             <Route path="my-booking" element={<ViewBooking/>}/>
+            <Route path="users/viewcity" element={<ViewCity />} />
+            <Route path="viewpg/:cityId" element={<PGCard />} />
+            <Route path="viewpg" element={<PGCard />} />
+            <Route path="viewpgdetails/:id" element={<PGDetails />} />
+            <Route path="my-booking" element={<ViewBooking />} />
           </Route>
 
 
-        
-        <Route path="/admin" element={<AdminLayout />}>
-  <Route index element={<Dashboard />} />
 
-  <Route path="city/add" element={<Add />} />
-  <Route path="city/manage" element={<Manage />} />
-  <Route path="city/update/:id" element={<Update />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
 
- <Route path="users" element={<Users/>}/>
+            <Route path="city/add" element={<Add />} />
+            <Route path="city/manage" element={<Manage />} />
+            <Route path="city/update/:id" element={<Update />} />
 
- 
-  <Route path="PGowners" element={<PGowners />} />
-  <Route path="Property" element={<Property/>}/>
-   <Route path="bookings" element={<Bookings/>}/>
-    <Route path="viewpgdetails/:id" element={<PGDetails/>}/>
-</Route>
+            <Route path="users" element={<Users />} />
 
-     
-       <Route path="/admin/roomcred" element={<RoomcredLayout />}>
 
-         <Route path="viewrooms" element={<Viewrooms/>}/>
-        </Route> 
-       
- 
-    
- 
-        <Route path="pgowner" element={<PgownerLayout />}>
-          <Route index element={<PgDashboard />} />
+            <Route path="PGowners" element={<PGowners />} />
+            <Route path="Property" element={<Property />} />
+            <Route path="bookings" element={<Bookings />} />
+            <Route path="viewpgdetails/:id" element={<PGDetails />} />
+          </Route>
 
-          <Route path="property/add" element={<Addproperty/>} />
-          <Route path="property/manage" element={<Manageproperty/>}/>
-          <Route path="property/update/:id" element={<Updateproperty/>}/>
-          {/* <Route path="city/manage" element={<Manage />} /> */}
-          {/* <Route path="city/update/:id" element={<Update />} /> */}
-          <Route path="bookings" element={<ViewOwnerBooking/>}/>
-        <Route path="viewpgdetails/:id" element={<PGDetails/>}/>
-      </Route>
+
+          <Route path="/admin/roomcred" element={<RoomcredLayout />}>
+
+            <Route path="viewrooms" element={<Viewrooms />} />
+          </Route>
+
+
+
+
+          <Route path="pgowner" element={<PgownerLayout />}>
+            <Route index element={<PgDashboard />} />
+
+            <Route path="property/add" element={<Addproperty />} />
+            <Route path="property/manage" element={<Manageproperty />} />
+            <Route path="property/update/:id" element={<Updateproperty />} />
           
+            <Route path="bookings" element={<ViewOwnerBooking />} />
+            <Route path="viewpgdetails/:id" element={<PGDetails />} />
+          </Route>
+
 
 
 

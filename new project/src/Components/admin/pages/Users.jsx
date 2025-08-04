@@ -1,4 +1,4 @@
-import { collection, Firestore, onSnapshot, query, where } from "firebase/firestore"
+import { collection, Firestore, onSnapshot, query, where, updateDoc, doc } from "firebase/firestore"
 import { db } from "../../../Firebase"
 import { useEffect } from "react"
 import { useState } from "react"

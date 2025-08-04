@@ -20,8 +20,8 @@ export default function Login(){
   const handleForm=(e)=>{
     e.preventDefault()
     signInWithEmailAndPassword(auth,email,password).then((userCred)=>{
-      console.log("signin",userCred.user.uid);
-      // 
+      // console.log("signin",userCred.user.uid);
+      
       getUserData(userCred.user.uid)
       
      
@@ -47,7 +47,7 @@ export default function Login(){
      else if (userData?.userType === 2) {
       nav("/pgowner");
      } else {
-     nav("/user"); 
+     nav("/"); 
    }
    
   }
