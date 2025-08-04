@@ -1,10 +1,10 @@
-import { collection, getCountFromServer } from "firebase/firestore";
+import { collection, getCountFromServer, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { db } from "../../Firebase";
+import { db } from "../../../Firebase";
 
 
-export default function Dashboard(){
+export default function PgDashboard(){
     const [user, setUser]=useState(0)
     const [room, setRoom]=useState(0)
     const [booking, setBooking]=useState(0)
@@ -18,12 +18,15 @@ export default function Dashboard(){
         setUser(usersCount.data().count);
     }
     const fetchRoomCount=async ()=>{
-        let RoomCount= await getCountFromServer(collection(db,"property"))
+        let q=query(collection(db,"property"),where("ownerId","==",sessionStorage.getItem("userId")))
+
+        let RoomCount= await getCountFromServer(q)
         setRoom(RoomCount.data().count);
         
     }
     const fetchBookingCount=async ()=>{
-        let bookingCount= await getCountFromServer(collection(db,"payments"))
+        let q=query(collection(db,"payments"),where("ownerId","==",sessionStorage.getItem("userId")))
+        let bookingCount= await getCountFromServer(q)
         setBooking(bookingCount.data().count);
         
     }

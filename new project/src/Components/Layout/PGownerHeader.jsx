@@ -39,20 +39,23 @@ export default function PgownerHeader(){
       </a>
       <nav id="navmenu" className="navmenu">
         <ul>
+           <li>
+            <Link to="/pgowner">Home</Link>
+          </li>
           <li className="dropdown">
                     <Link to = " ">   Property <i className="=bi bi-chevron-dropdown toggle-dropdown-indicator">
                       </i></Link>
                  
                 
                     <ul>
-                      <li><Link to="/Pgowner/property/add property">Add property </Link></li>
-                      <li><Link to="/Pgowner/property/manage property">Manage property </Link></li>
+                      <li><Link to="/Pgowner/property/add">Add property </Link></li>
+                      <li><Link to="/Pgowner/property/manage">Manage property </Link></li>
                     </ul>
                     </li> 
             
         
           <li>
-            <Link to="Pgowner/Bookings">Bookings</Link>
+            <Link to="/Pgowner/Bookings">Bookings</Link>
           </li>
          
           {

@@ -70,37 +70,36 @@ export default function Login(){
   return(
     <>
 
-      <section
-            className="hero-wrap hero-wrap-2"
-            style={{ backgroundImage: 'url("/assets/images/bg_2.jpg")' }}
-            data-stellar-background-ratio="0.5"
-        >
-            <div className="overlay" />
-            <div className="container">
-            <div className="row no-gutters slider-text align-items-end">
-                <div className="col-md-9 ftco-animate pb-5 ">
-                <p className="breadcrumbs mb-2">
-                    <span className="mr-2">
-                    <a href="index.html">
-                        Home <i className="ion-ios-arrow-forward" />
-                    </a>
-                    </span>{" "}
-                    <span>
-                    Login <i className="ion-ios-arrow-forward" />
-                    </span>
-                </p>
-                <h1 className="mb-0 bread">Login</h1>
-                </div>
+ <div className="page-title" style={{background:"url('/assets/img/hero-carousel/hero-carousel-3.jpg')"}} >
+      <div className="heading">
+        <div className="container">
+          <div className="row d-flex justify-content-center text-center">
+            <div className="col-lg-8">
+              <h1 className="text-light">Login</h1>
+              
             </div>
-            </div>
-        </section>
+          </div>
+        </div>
+      </div>
+      {/* <nav className="breadcrumbs">
+        <div className="container">
+          <ol>
+            <li>
+              <Link to={"/"} className="text-light">Home</Link>
+            </li>
+            <li className="current text-light" >Login</li>
+          </ol>
+        </div>
+      </nav> */}
+    </div>
+
             <div className="container my-5">
               
                  {/* contact form */}
-            <div className="row justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
+            <div className="row justify-content-center" >
 
               <div className="col-md-7 mt-5" style={{ boxShadow: "0px 0px 15px gray" }}>
-                <div className="contact-wrap w-100 p-md-5 p-4">
+                <div className="w-100 p-md-5 p-4">
                   <h3 className="mb-4 text-center">Login</h3>
                   <form
                     method="POST"
@@ -151,7 +150,7 @@ export default function Login(){
                           <input
                             type="submit"
                             defaultValue="Submit"
-                            className="btn btn-primary"
+                            className="btn btn-primary my-2"
                           />
                           <div className="submitting" />
                         </div>
@@ -159,8 +158,8 @@ export default function Login(){
                     </div>
                   </form>
                   <div className="text-center">
-              <button type="button " onClick={signInGoogle}className="btn btn-danger mt-2"> 
-             <i class="bi bi-google">Sign In With google</i>
+              <button type="button " onClick={signInGoogle} className="btn btn-danger my-2"> 
+             <i class="bi bi-google"> Sign In With google</i>
                   </button>
                   </div>
                   {/* {email} */}
@@ -168,12 +167,7 @@ export default function Login(){
                 
                 </div>
                </div>
-              <div className="col-md-5 d-flex align-items-stretch">
-                {/* <div
-                  className="info-wrap w-100 p-5 img"
-                  // style={{ backgroundImage: "url(/assets/images/img.jpg)" }}
-                ></div> */}
-              </div>
+              
              </div>
             </div>
 

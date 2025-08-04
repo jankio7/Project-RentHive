@@ -24,13 +24,6 @@ export default function Manage() {
     setLoad(false); 
   });
 };
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       })
-
-  //     );
-  //   });
-  // };
 
   useEffect(() => {
     fetchCities();
@@ -67,35 +60,26 @@ export default function Manage() {
 
   return (
     <>
-    <section
-        className="hero-wrap hero-wrap-2"
-        style={{ backgroundImage: 'url("/assets/images/bg_2.jpg")' }}
-        data-stellar-background-ratio="0.5"
-      >
-        <div className="overlay" />
+      <div className="page-title" style={{background:"url('/assets/img/hero-carousel/hero-carousel-3.jpg')"}} >
+        <div className="heading">
         <div className="container">
-          <div className="row no-gutters slider-text align-items-end">
-            <div className="col-md-9 ftco-animate pb-5">
-              <p className="breadcrumbs mb-2">
-                <span className="mr-2">
-                  <a href="/">
-                    Home <i className="ion-ios-arrow-forward" />
-                  </a>
-                </span>
-                <span>
-                  City <i className="ion-ios-arrow-forward" />
-                </span>
-              </p>
-              <h1 className="mb-0 bread">Manage City</h1>
+          <div className="row d-flex justify-content-center text-center">
+            <div className="col-lg-8">
+              <h1 className="text-light">City</h1>
+              
             </div>
           </div>
         </div>
-      </section> 
-      
+      </div>
+   
+    </div>
+     
 
       <div className="container my-5">
         {load?
-      <PulseLoader color="#4bc4daff" size={30} cssOverride={{display:"block", margin:"0 auto"}} loading={load}/>
+          <div className="d-flex justify-content-center">
+            <PulseLoader  size={30} loading={load} color="#00bd56" />
+          </div>
             :
         <div className="row justify-content-center no-gutters">
           <div className="col-md-10" style={{ boxShadow: "0px 0px 15px gray" }}>
@@ -106,7 +90,6 @@ export default function Manage() {
                   <tr>
                     <th>#</th>
                     <th>City Name</th>
-                    <th>description</th>
                     <th>Image</th>
                     <th>Action</th>
                   </tr>
@@ -116,7 +99,6 @@ export default function Manage() {
                     <tr key={el.id}>
                       <td>{index + 1}</td>
                       <td>{el.cityName}</td>
-                      <td>{el.description}</td>
                       <td>
                         <img
                           src={el.image}

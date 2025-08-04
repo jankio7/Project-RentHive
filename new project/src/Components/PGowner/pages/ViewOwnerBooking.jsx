@@ -4,11 +4,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import { db } from "../../../Firebase";
 
-export default function Bookings() {
+export default function ViewOwnerBooking() {
     const [data, setData] = useState([]);
     const [load, setLoad] = useState(true);
     useEffect(() => {
-        var q=query(collection(db, "payments"))
+        var q=query(collection(db, "payments"), where("ownerId","==", sessionStorage.getItem("userId")))
         
         const unsubscribe = onSnapshot(q, async (snapshot) => {
           const propertyList = snapshot.docs.map((doc) => ({
@@ -73,11 +73,7 @@ export default function Bookings() {
                 <div><i className="bi bi-person"></i> {el?.user?.name}</div>
                 <div><i className="bi bi-envelope"></i> {el?.user?.email}</div>
                 <div><i className="bi bi-phone"></i> {el?.user?.contact}</div>
-                <p>Owner Details:</p>
-                <div><i className="bi bi-person"></i> {el?.owner?.name}</div>
-                <div><i className="bi bi-envelope"></i> {el?.owner?.email}</div>
-                <div><i className="bi bi-phone"></i> {el?.owner?.contact}</div>
-                <Link className="btn btn-outline-primary d-block mx-auto" to={`/admin/viewpgDetails/${el?.pgId}`}>View PG</Link>
+                <Link className="btn btn-outline-primary d-block mx-auto" to={`/PGowner/viewpgDetails/${el?.pgId}`}>View PG</Link>
               </div>
             </div>
         </div>

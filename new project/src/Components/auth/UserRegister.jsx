@@ -3,7 +3,7 @@ import { useState } from "react"
 
 import { toast } from "react-toastify"
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { auth, db } from "../../Firebase"
 
 export default function Register(){
@@ -33,7 +33,7 @@ export default function Register(){
         email:email,
         contact:contact,
         userId:userId,
-        userType:userType, 
+        userType:3, 
         status:true, 
         createdAt:Timestamp.now()
       }
@@ -60,42 +60,40 @@ export default function Register(){
       sessionStorage.setItem("isLogin", true)
       toast.success("Login successfully")
       if(userData?.userType == 3){
-     nav("/user")
+     nav("/")
       }else{
         nav("/")
       }
      }
     return(
         <>
-        <section
-                className="hero-wrap hero-wrap-2"
-                style={{ backgroundImage: 'url("/assets/img/about-company-3.jpg")' }}
-                data-stellar-background-ratio="0.5"
-            >
-                <div className="overlay" />
-                <div className="container">
-                <div className="row no-gutters slider-text align-items-end">
-                    <div className="col-md-9 ftco-animate pb-5">
-                    <p className="breadcrumbs mb-2">
-                        <span className="mr-2">
-                        <a href="index.html">
-                            Home <i className="ion-ios-arrow-forward" />
-                        </a>
-                        </span>{" "}
-                        <span>
-                        Register <i className="ion-ios-arrow-forward" />
-                        </span>
-                    </p>
-                    <h1 className="mb-0 bread">Register</h1>
-                    </div>
-                </div>
-                </div>
-            </section>
+        <div className="page-title" style={{background:"url('/assets/img/hero-carousel/hero-carousel-3.jpg')"}} >
+      <div className="heading">
+        <div className="container">
+          <div className="row d-flex justify-content-center text-center">
+            <div className="col-lg-8">
+              <h1 className="text-light">Register</h1>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <nav className="breadcrumbs">
+        <div className="container">
+          <ol>
+            <li>
+              <Link to={"/"} className="text-light">Home</Link>
+            </li>
+            <li className="current text-light" >Login</li>
+          </ol>
+        </div>
+      </nav> */}
+    </div>
             <div className="container my-5">
                 
                 {/* contact form  */}
-                     <div className="row no-gutters">
-              <div className="col-md-7">
+                     <div className="row justify-content-center">
+              <div className="col-md-7" style={{ boxShadow: "0px 0px 15px gray" }}>
                 <div className="contact-wrap w-100 p-md-5 p-4">
                   <h3 className="mb-4">Register</h3>
                   <form
@@ -106,7 +104,7 @@ export default function Register(){
                     onSubmit={handleForm}
                   >
                     <div className="row">
-                     <div className="col-md-12">
+                     <div className="col-md-12 my-2">
                         <div className="form-group">
                           <label className="label" htmlFor="email">
                             Full Name
@@ -124,7 +122,7 @@ export default function Register(){
                           />
                         </div>
                       </div>
-                      <div className="col-md-12">
+                      <div className="col-md-12 my-2">
                         <div className="form-group">
                           <label className="label" htmlFor="email">
                             Email Address
@@ -142,7 +140,7 @@ export default function Register(){
                           />
                         </div>
                       </div>
-                      <div className="col-md-12">
+                      <div className="col-md-12 my-2">
                         <div className="form-group">
                           <label className="label" htmlFor="subject">
                             Password
@@ -160,7 +158,7 @@ export default function Register(){
                           />
                         </div>
                       </div>
-                    <div className="col-md-12">
+                    <div className="col-md-12 my-2">
                         <div className="form-group">
                           <label className="label" htmlFor="email">
                             Contact
@@ -180,26 +178,23 @@ export default function Register(){
                           />
                         </div>
                       </div>
-                      <div className="col-md-12">
+                      <div className="col-md-12 my-2">
                         <div className="form-group">
                           <input
                             type="submit"
                             defaultValue="Submit"
-                            className="btn btn-primary"
+                            className="btn btn-primary d-block mx-auto"
                           />
                           <div className="submitting" />
                         </div>
                       </div>
                     </div>
                   </form>
+                  <div>Register as an PG-owner? <Link to={"/pg-register"}>Click Here!</Link></div>
+
                 </div>
               </div>
-              <div className="col-md-5 d-flex align-items-stretch">
-                {/* <div
-                  className="info-wrap w-100 p-5 img"
-                  style={{ backgroundImage: "url(/assets/images/img.jpg)" }}
-                ></div> */}
-              </div>
+           
             </div>
             </div>
         </>

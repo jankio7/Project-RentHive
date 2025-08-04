@@ -36,6 +36,9 @@ export default function AdminHeader(){
               </a>
               <nav id="navmenu" className="navmenu">
                 <ul>
+                  <li>
+                    <Link to="/admin">Home</Link>
+                  </li>
                   
                   <li className="dropdown">
                     <Link to = " "> City <i className="=bi bi-chevron-dropdown toggle-dropdown-indicator">
@@ -56,7 +59,7 @@ export default function AdminHeader(){
                     <ul>
                       <li><Link to="/admin/PGowners">PGowners</Link></li>
                       <li><Link to="/admin/property">Property</Link></li>
-                      <li><Link to="admin/bookings">Bookings</Link></li>
+                      <li><Link to="/admin/bookings">Bookings</Link></li>
                     </ul>
                     </li>
 

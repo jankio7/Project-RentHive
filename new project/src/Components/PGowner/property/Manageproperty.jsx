@@ -1,223 +1,5 @@
-// import React, { useEffect, useState } from "react";
-// import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
-// import { db } from "../../../Firebase"; 
-// import Swal from "sweetalert2";
-// import { Link } from "react-router-dom";
-// import { PulseLoader } from "react-spinners";
-
-// export default function Manageproperty() {
-//   const [properties, setProperties] = useState([]);
-//   const [loading, setLoading] = useState(false);
-
-//   useEffect(() => {
-//     const unsub = onSnapshot(collection(db, "properties"), (snapshot) => {
-//       const list = snapshot.docs.map((doc, index) => ({
-//         id: doc.id,
-//         sno: index + 1,
-//         ...doc.data(),
-//       }));
-//       setProperties(list);
-//     });
-
-//     return () => unsub();
-//   }, []);
-
-//   const Deleteproperty = (Id) => {
-//     Swal.fire({
-//       title: "Are you sure?",
-//       text: "You won't be able to revert this!",
-//       icon: "warning",
-//       showCancelButton: true,
-//       confirmButtonColor: "#3085d6",
-//       cancelButtonColor: "#d33",
-//       confirmButtonText: "Yes, delete it!",
-//     }).then(async (result) => {
-//       if (result.isConfirmed) {
-//         try {
-//           await deleteDoc(doc(db, "properties", Id));
-//           Swal.fire("Deleted!", "Property has been deleted.", "success");
-//         } catch (error) {
-//           console.error("Delete error:", error.message);
-//         }
-//       }
-//     });
-//   };
-
-//   return (
-
-//    <>
-//       {/* Hero Section */}
-//       <section
-//         className="hero-wrap hero-wrap-2"
-//         style={{ backgroundImage: 'url("/assets/img/hero-carousel/hero-carousel-1.jpg")' }}
-//         data-stellar-background-ratio="0.5"
-//       >
-//         <div className="overlay" />
-//         <div className="container">
-//           <div className="row no-gutters slider-text align-items-end">
-//             <div className="col-md-9 ftco-animate pb-5">
-//               <p className="breadcrumbs mb-2">
-//                 <span className="mr-2">
-//                   <a href="/">Home <i className="ion-ios-arrow-forward" /></a>
-//                 </span>
-//                 <span>Property <i className="ion-ios-arrow-forward" /></span>
-//               </p>
-//               <h1 className="mb-0 bread">Add Property</h1>
-//             </div>
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* Main Form Section */}
-//       <div className="container my-5">
-//         {loading ? (
-//           <PulseLoader
-//             color="#4bc4daff"
-//             size={30}
-//             cssOverride={{ display: "block", margin: "0 auto" }}
-//           />
-//         ) : (
-//           <div className="row justify-content-center no-gutters">
-//             <div className="col-md-7" style={{ boxShadow: "0px 0px 15px gray" }}>
-//               <div className="contact-wrap w-100 p-md-5 p-4">
-//                 <h3 className="mb-4 text-center">Add PG Property</h3>
-//                 <form onSubmit={handleSubmit} className="contactForm">
-//                   <div className="row">
-//                     {/* Title */}
-//                     <div className="col-md-12">
-//                       <div className="form-group">
-//                         <label className="label">Title</label>
-//                         <input
-//                           type="text"
-//                           className="form-control"
-//                           placeholder="Property title"
-//                           value={title}
-//                           onChange={(e) => setTitle(e.target.value)}
-//                           required
-//                         />
-//                       </div>
-//                     </div>
-
-//                     {/* Image */}
-//                     <div className="col-md-12">
-//                       <div className="form-group">
-//                         <label className="label">Image</label>
-//                         <input
-//                           type="file"
-//                           className="form-control"
-//                           value={imageName}
-//                           onChange={handleImageChange}
-//                           accept="image/*"
-//                           required
-//                         />
-//                       </div>
-//                     </div>
-
-//                     {/* Size */}
-//                     <div className="col-md-12">
-//                       <div className="form-group">
-//                         <label className="label">Size (in Sqft)</label>
-//                         <input
-//                           type="text"
-//                           className="form-control"
-//                           placeholder="e.g. 300"
-//                           value={size}
-//                           onChange={(e) => setSize(e.target.value)}
-//                           required
-//                         />
-//                       </div>
-//                     </div>
-
-//                     {/* AC */}
-//                     <div className="col-md-12">
-//                       <div className="form-group">
-//                         <label className="label">AC Room</label>
-//                         <select className="form-control" value={ac} onChange={(e) => setAc(e.target.value)}>
-//                           <option value="Yes">Yes</option>
-//                           <option value="No">No</option>
-//                         </select>
-//                       </div>
-//                     </div>
-
-//                     {/* Non AC */}
-//                     <div className="col-md-12">
-//                       <div className="form-group">
-//                         <label className="label">Non-AC Room</label>
-//                         <select className="form-control" value={nonAc} onChange={(e) => setNonAc(e.target.value)}>
-//                           <option value="Yes">Yes</option>
-//                           <option value="No">No</option>
-//                         </select>
-//                       </div>
-//                     </div>
-
-//                     {/* Balcony */}
-//                     <div className="col-md-12">
-//                       <div className="form-group">
-//                         <label className="label">Balcony</label>
-//                         <select className="form-control" value={balcony} onChange={(e) => setBalcony(e.target.value)}>
-//                           <option value="Yes">Yes</option>
-//                           <option value="No">No</option>
-//                         </select>
-//                       </div>
-//                     </div>
-
-//                     {/* Type */}
-//                     <div className="col-md-12">
-//                       <div className="form-group">
-//                         <label className="label">Type</label>
-//                         <select className="form-control" value={type} onChange={(e) => setType(e.target.value)} required>
-//                           <option disabled value="">Select Type</option>
-//                           <option value="Boys">Boys</option>
-//                           <option value="Girls">Girls</option>
-//                         </select>
-//                       </div>
-//                     </div>
-
-//                     {/* Price */}
-//                     <div className="col-md-12">
-//                       <div className="form-group">
-//                         <label className="label">Price (monthly)</label>
-//                         <input
-//                           type="text"
-//                           className="form-control"
-//                           placeholder="e.g. ₹6000"
-//                           value={price}
-//                           onChange={(e) => setPrice(e.target.value)}
-//                           required
-//                         />
-//                       </div>
-//                     </div>
-
-//                     <div className="border px-3 py-2">
-//                   <div className="flex justify-center gap-2">
-//                     <Link
-//                       to={`/Pgowner/property/update/${prop.id}`}
-//                       className="btn btn-outline-success mx-2"
-//                     >
-//                       Edit
-//                     </Link>
-//                     <button
-//                       onClick={() => Deleteproperty(prop.id)}
-//                       className="btn btn-danger"
-//                     >
-//                       Delete
-//                     </button>
-//                   </div>
-//                   </div>
-//                   </div>
-//                 </form>
-//               </div>
-//             </div>
-//           </div>
-//         )}
-//       </div>
-//     </>
-//   );
-// }
-
-
 import { useEffect, useState } from "react";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../../../Firebase";
 import { Link } from "react-router-dom";
@@ -226,16 +8,24 @@ import Swal from "sweetalert2";
 
 export default function Manageproperty() {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [load, setLoad] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "property"), (snapshot) => {
+    let q=query(collection(db, "property"), where("ownerId","==",sessionStorage.getItem("userId")))
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
       const propertyList = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setData(propertyList);
-      setLoading(false);
+      let updateData=[]
+      for(let i=0;i<propertyList.length;i++){
+        let cityId=propertyList[i].cityId 
+        let cityDoc=await getDoc(doc(db,"cities", cityId))
+        let cityData=cityDoc.data()
+        updateData.push({...propertyList[i], city:cityData})
+      }
+      setData(updateData);
+      setLoad(false);
     });
 
     return () => unsubscribe();
@@ -264,54 +54,41 @@ export default function Manageproperty() {
 
   return (
     <>
-      <section
-        className="hero-wrap hero-wrap-2"
-        style={{ backgroundImage: 'url("/assets/images/bg_2.jpg")' }}
-        data-stellar-background-ratio="0.5"
-      >
-        <div className="overlay" />
-        <div className="container">
-          <div className="row no-gutters slider-text align-items-end">
-            <div className="col-md-9 ftco-animate pb-5">
-              <p className="breadcrumbs mb-2">
-                <span className="mr-2">
-                  <a href="/">Home <i className="ion-ios-arrow-forward" /></a>
-                </span>
-                <span>Property <i className="ion-ios-arrow-forward" /></span>
-              </p>
-              <h1 className="mb-0 bread">Manage Property</h1>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="container my-5">
-        {loading ? (
-          <PulseLoader
-            color="#4bc4daff"
-            size={30}
-            cssOverride={{ display: "block", margin: "0 auto" }}
-          />
-        ) : (
+       <div className="page-title" style={{background:"url('/assets/img/hero-carousel/hero-carousel-3.jpg')"}} >
+             <div className="heading">
+             <div className="container">
+               <div className="row d-flex justify-content-center text-center">
+                 <div className="col-lg-8">
+                   <h1 className="text-light">PG</h1>
+                   
+                 </div>
+               </div>
+             </div>
+           </div>
+        
+         </div>
+          
+           <div className="container my-5">
+           {load? 
+           <div className="d-flex justify-content-center">
+           <PulseLoader  size={30} loading={load} color="#00bd56" />
+           </div>
+           : (
           <div className="row justify-content-center no-gutters">
-            <div className="col-md-12" style={{ boxShadow: "0px 0px 15px gray" }}>
+            <div className="col-md-12 table-responsive" style={{ boxShadow: "0px 0px 15px gray" }}>
               <div className="contact-wrap w-100 p-md-5 p-4">
                 <h3 className="mb-4">Properties</h3>
                 <table className="table table-striped">
                   <thead>
-                    <tr>
+                    <tr className="">
                       <th>#</th>
-                      <th>Owner</th>
-                      <th>Title</th>
-                      <th>Size</th>
-                      <th>Status</th>
-                      <th>AC</th>
-                      <th>Food</th>
-                      <th>Balcony</th>
-                      <th>Type</th>
-                      <th>Price</th>
-                      <th>City</th>
                       <th>Image</th>
+                      <th>Title</th>
+                      <th>Details</th>
+                      <th>Price</th>
+                      <th>Location</th>
+                      <th>City</th>
+                       <th>Status</th>
                       <th>Action</th>
                     </tr>
                      </thead>
@@ -319,27 +96,35 @@ export default function Manageproperty() {
                     {data.map((el, index) => (
                  <tr key={el.id}>
                             <td>{index + 1}</td>
-                            <td>{el.owner}</td>
-                            <td>{el.title || "N/A"}</td>
-                            <td>{el.size || "N/A"}</td>
-                            <td>{el.status}</td>
-                            <td>{el.ac}</td>
-                            <td>{el.food}</td>
-                            <td>{el.balcony}</td> {/* was: el.city */}
-                            <td>{el.type}</td>     {/* was: el.balcony */}
-                            <td>{el.price}</td>    {/* was: el.type */}
-                            <td>{el.city}</td>     {/* was: el.price */}
                             <td>
-                         {el.image ? (
-                      <img
-                       src={el.image}
-                       alt={el.title}
-                       style={{ width: "100px", height: "auto" }}
-                      />
-                      ) : (
-                       "No Image"
-                    )}
-                </td> 
+                                    {el.image ? (
+                                  <img
+                                  src={el.image}
+                                  alt={el.title}
+                                  style={{ width: "100px", height: "auto" }}
+                                  />
+                                  ) : (
+                                  "No Image"
+                                )}
+                            </td> 
+                            <td>{el.title || "N/A"}</td>
+                            <td>
+                              <ul>
+                              <li>Size: {el.size || "N/A"} ft</li>
+                              <li>AC:{el.ac}</li>
+                              <li>Food: {el.food}</li>
+                              <li>Balcony: {el.balcony}</li>
+                              <li>Type: {el.type}</li>
+                              <li>
+                                <Link to={el?.video} target="_blank">Video</Link>
+                              </li>
+                              </ul>
+                            </td>    
+                            <td>&#8377; {el.price}</td> 
+                            <td>{el.location}</td>    
+                            <td>{el.city?.cityName}</td>    
+                            <td>{el.status}</td>
+                           
                     <td>
                     <Link
                   to={`/Pgowner/property/update/${el.id}`}

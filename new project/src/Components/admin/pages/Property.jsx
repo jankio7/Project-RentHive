@@ -1,223 +1,167 @@
-// import React, { useState } from "react";
-
-// export default function Property() {
-
-//   const [properties, setProperties] = useState([
-//     {
-//       id: 1,
-//       owner: "Deepjot Kaur",
-//       title: "Cozy Apartment",
-//       size: "1200 sqft",
-//       images: [
-//         // "public/assets/img/about-company-2.jpg",
-//         // "https://via.placeholder.com/80"
-//       ],
-//       status: "Available",
-//       price: "₹15,000/month",
-//       desc: "Nice and cozy apartment in city center.",
-//       city: "Chandigarh",
-//     },
-//     {
-//       id: 2,
-//       owner: "Raj Singh",
-//       title: "Luxury Villa",
-//       size: "3500 sqft",
-//       images: [
-//         // "https://via.placeholder.com/80"
-//       ],
-//       status: "Booked",
-//       price: "₹1,50,000/month",
-//       desc: "Spacious villa with garden and pool.",
-//       city: "Noida",
-//     },
-//   ]);
-
-//   // Delete handler example
-//   const handleDelete = (id) => {
-//     if(window.confirm("Are you sure you want to delete this property?")) {
-//       setProperties(properties.filter(prop => prop.id !== id));
-//     }
-//   };
-
-//   return (
-//     <div className="p-4">
-//       <h2 className="text-2xl font-semibold mb-4">Manage Properties</h2>
-//       <div className="overflow-x-auto">
-//         <table className="min-w-full border border-gray-300">
-//           <thead className="bg-gray-100">
-//             <tr>
-//               <th className="border px-3 py-2">S.No.</th>
-//               <th className="border px-3 py-2">Owner</th>
-//               <th className="border px-3 py-2">Title</th>
-//               <th className="border px-3 py-2">Size</th>
-//               <th className="border px-3 py-2">Images</th>
-//               <th className="border px-3 py-2">Status</th>
-//               <th className="border px-3 py-2">Price</th>
-//               <th className="border px-3 py-2">Description</th>
-//               <th className="border px-3 py-2">City</th>
-//               <th className="border px-3 py-2">Action</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {properties.map((prop, index) => (
-//               <tr key={prop.id} className="text-center border-b">
-//                 <td className="border px-3 py-2">{index + 1}</td>
-//                 <td className="border px-3 py-2">{prop.owner}</td>
-//                 <td className="border px-3 py-2">{prop.title}</td>
-//                 <td className="border px-3 py-2">{prop.size}</td>
-//                 <td className="border px-3 py-2 flex justify-center space-x-2">
-//                   {prop.images.map((img, i) => (
-//                     <img
-//                       key={i}
-//                       src={img}
-//                       alt={`Property ${prop.title} ${i + 1}`}
-//                       className="w-16 h-12 object-cover rounded"
-//                     />
-//                   ))}
-//                 </td>
-//                 <td className="border px-3 py-2">{prop.status}</td>
-//                 <td className="border px-3 py-2">{prop.price}</td>
-//                 <td className="border px-3 py-2">{prop.desc}</td>
-//                 <td className="border px-3 py-2">{prop.city}</td>
-//                 <td className="border px-3 py-2 space-x-2">
-//                   <button
-//                     onClick={() => alert("Edit functionality pending")}
-//                     className="px-2 py-1 mb-2 bg-blue-500 text-black rounded hover:bg-blue-600"
-//                   >
-//                     Edit
-//                   </button>
-//                   <button
-//                     onClick={() => handleDelete(prop.id)}
-//                     className="px-2 py-1 bg-red-500 text-black rounded hover:bg-red-600"
-//                   >
-//                     Delete
-//                   </button>
-//                 </td>
-//               </tr>
-//             ))}
-//             {properties.length === 0 && (
-//               <tr>
-//                 <td colSpan="10" className="py-4 text-center text-gray-500">
-//                   No properties found.
-//                 </td>
-//               </tr>
-//             )}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// }
-
-import React, { useEffect, useState } from "react";
-import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../../Firebase"; 
+import { useEffect, useState } from "react";
+import { collection, deleteDoc, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
+import { toast } from "react-toastify";
+import { db } from "../../../Firebase";
+import { Link } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 import Swal from "sweetalert2";
 
-export default function Property() {
-  const [properties, setProperties] = useState([]);
-
+export default function Manageproperty() {
+  const [data, setData] = useState([]);
+  const [load, setLoad] = useState(true);
 
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, "property"), (snapshot) => {
-      const list = snapshot.docs.map((doc, index) => ({
+    let q=query(collection(db, "property"))
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      const propertyList = snapshot.docs.map((doc) => ({
         id: doc.id,
-        sno: index + 1,
         ...doc.data(),
       }));
-       
-      setProperties(list);
+      let updateData=[]
+     
+      for(let i=0;i<propertyList.length;i++){
+        let cityId=propertyList[i].cityId 
+        let cityDoc=await getDoc(doc(db,"cities", cityId))
+        let cityData=cityDoc.data()
+        let ownerId=propertyList[i].ownerId 
+        let ownerDoc=await getDoc(doc(db,"users", ownerId))
+        let ownerData=ownerDoc.data()
+        updateData.push({...propertyList[i], city:cityData, owner:ownerData})
+      }
+      setData(updateData);
+      setData(updateData);
+      setLoad(false);
     });
 
-    return () => unsub(); 
+    return () => unsubscribe();
   }, []);
 
-const handleDelete = async (id) => {
-    const result = await Swal.fire({
+  const DeleteProperty = (id) => {
+    Swal.fire({
       title: "Are you sure?",
-      text: "you want to delete this!",
+      text: "You want to delete this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonText: "Cancel",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteDoc(doc(db, "property", id));
+          toast.success("Deleted successfully!");
+        } catch (err) {
+          toast.error("Delete failed: " + err.message);
+        }
+      }
     });
-
-    if (result.isConfirmed) {
-      await deleteDoc(doc(db, "property", id));
-      Swal.fire("Deleted!", "Property has been deleted.", "success");
-    }
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4"> Properties</h2>
-      <div className="overflow-x-auto">
-                  <h3 className="mb-4">Property</h3>
-
-        <table className="min-w-full border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="border px-3 py-2">S.No.</th>
-              <th className="border px-3 py-2">Owner</th>
-              <th className="border px-3 py-2">Title</th>
-              <th className="border px-3 py-2">Size</th>
-              <th className="border px-3 py-2">Status</th>
-              <th className="border px-3 py-2">Ac</th>
-              <th className="border px-3 py-2">Food</th>
-              <th className="border px-3 py-2">Balcony</th>
-              <th className="border px-3 py-2">Type</th>
-              <th className="border px-3 py-2">Price</th>
-              <th className="border px-3 py-2">City</th>
-              <th className="border px-3 py-2">Image</th>
-              <th className="border px-3 py-2">Action</th>   
-            </tr>
-          </thead>
-          <tbody>
-            {properties.map((prop, index) => (
-              <tr key={prop.id} className="text-center border-b">
-                <td className="border px-3 py-2">{index + 1}</td>
-                <td className="border px-3 py-2">{prop.owner}</td>
-                <td className="border px-3 py-2">{prop.title}</td>
-                <td className="border px-3 py-2">{prop.size}</td>
-                <td className="border px-3 py-2">{prop.status}</td>
-                <td className="border px-3 py-2">{prop.ac}</td>
-                <td className="border px-3 py-2">{prop.food}</td>
-                <td className="border px-3 py-2">{prop.balcony}</td>
-                <td className="border px-3 py-2">{prop.type}</td>
-                <td className="border px-3 py-2">{prop.price}</td>
-                <td className="border px-3 py-2">{prop.city}</td>
-                <td className="border px-3 py-2">
-                  {prop.image ? (
-                    <img
-                      src={prop.image}
-                      alt={prop.title}
-                      style={{ width: "100px", height: "auto" }}
-                    />
-                  ) : (
-                    <span className="text-gray-400">No Image</span>
-                  )}
-                </td>
-                <td className="border px-3 py-2 space-x-2">
-                  <button
-                    onClick={() => handleDelete(prop.id)}
-                    className="btn btn-danger btn-sm"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {properties.length === 0 && (
-              <tr>
-                <td colSpan="13" className="py-4 text-center text-gray-500">
-                  No properties found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+    <>
+       <div className="page-title" style={{background:"url('/assets/img/hero-carousel/hero-carousel-3.jpg')"}} >
+             <div className="heading">
+             <div className="container">
+               <div className="row d-flex justify-content-center text-center">
+                 <div className="col-lg-8">
+                   <h1 className="text-light">PG</h1>
+                   
+                 </div>
+               </div>
+             </div>
+           </div>
+        
+         </div>
+          
+           <div className="container my-5">
+           {load? 
+           <div className="d-flex justify-content-center">
+           <PulseLoader  size={30} loading={load} color="#00bd56" />
+           </div>
+           : (
+          <div className="row justify-content-center no-gutters">
+            <div className="col-md-12 table-responsive" style={{ boxShadow: "0px 0px 15px gray" }}>
+              <div className="contact-wrap w-100 p-md-5 p-4">
+                <h3 className="mb-4">PGs</h3>
+                <table className="table table-striped">
+                  <thead>
+                    <tr className="">
+                      <th>#</th>
+                      <th>Image</th>
+                      
+                      <th>Title</th>
+                      <th>Owner Details</th>
+                      <th>Details</th>
+                      <th>Price</th>
+                      <th>Location</th>
+                      <th>City</th>
+                       <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                     </thead>
+                    <tbody>
+                    {data.map((el, index) => (
+                 <tr key={el.id}>
+                            <td>{index + 1}</td>
+                            <td>
+                                    {el.image ? (
+                                  <img
+                                  src={el.image}
+                                  alt={el.title}
+                                  style={{ width: "100px", height: "auto" }}
+                                  />
+                                  ) : (
+                                  "No Image"
+                                )}
+                            </td> 
+                            <td>{el.title || "N/A"}</td>
+                            <td>
+                              {el?.owner?.name}<br/>
+                              {el?.owner?.email}<br/>
+                              {el?.owner?.contact}<br/>
+                            </td>
+                            <td>
+                              <ul>
+                              <li>Size: {el.size || "N/A"} ft</li>
+                              <li>AC:{el.ac}</li>
+                              <li>Food: {el.food}</li>
+                              <li>Balcony: {el.balcony}</li>
+                              <li>Type: {el.type}</li>
+                              <li>
+                                <Link to={el?.video} target="_blank">Video</Link>
+                              </li>
+                              </ul>
+                            </td>    
+                            <td>&#8377; {el.price}</td> 
+                            <td>{el.location}</td>    
+                            <td>{el.city?.cityName}</td>    
+                            <td>{el.status}</td>
+                           
+                    <td width={"200px"}>
+                   
+                <Link to={"/admin/viewPgDetails/"+el?.id}
+                className="btn btn-outline-info mx-2"
+                     >
+                    <i className="bi bi-eye"></i>
+                 </Link>
+                <button
+                className="btn btn-danger"
+               onClick={() => DeleteProperty(el.id)}
+                     >
+                    <i className="bi bi-trash"></i>
+                 </button>
+                  </td>
+                 </tr>
+                ))}
+                 </tbody>
+               </table>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 }
+
+  

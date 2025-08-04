@@ -1,4 +1,4 @@
-import { collection, Firestore, onSnapshot, query } from "firebase/firestore"
+import { collection, Firestore, onSnapshot, query, where } from "firebase/firestore"
 import { db } from "../../../Firebase"
 import { useEffect } from "react"
 import { useState } from "react"
@@ -8,7 +8,7 @@ import Switch from "react-switch"
 
 
 export default function Users(){
-    const [load, setLoad]=useState(false)
+    const [load, setLoad]=useState(true)
     const [users, setUsers]=useState([])
     // useEffect(fn, [dependency])
     useEffect(()=>{
@@ -17,12 +17,13 @@ export default function Users(){
 
     const fetchData=()=>{
         //getDoc, onsnapshot, getdocs
-        let q = query(collection(db, "users"))
+        let q = query(collection(db, "users"), where("userType","==",3))
         onSnapshot(q,(userCol)=>{
             setUsers(userCol.docs.map((el)=>{
                 // console.log(el.data(), el.id);
                 return {id:el.id, ...el.data()};
             }))
+            setLoad(false)
         })
     }
     const changeStatus = (userId, status)=>{
@@ -57,35 +58,26 @@ export default function Users(){
             }
     return(
 <>
-<section
-        className="hero-wrap hero-wrap-2"
-        style={{ backgroundImage: 'url("/assets/images/bg_2.jpg")' }}
-        data-stellar-background-ratio="0.5"
-      >
-        <div className="overlay" />
+     <div className="page-title" style={{background:"url('/assets/img/hero-carousel/hero-carousel-3.jpg')"}} >
+        <div className="heading">
         <div className="container">
-          <div className="row no-gutters slider-text align-items-end">
-            <div className="col-md-9 ftco-animate pb-5">
-              <p className="breadcrumbs mb-2">
-                <span className="mr-2">
-                  <a href="/">
-                    Home <i className="ion-ios-arrow-forward" />
-                  </a>
-                </span>
-                <span>
-                  Users<i className="ion-ios-arrow-forward" />
-                </span>
-              </p>
-              <h1 className="mb-0 bread"> Manage Users</h1>
+          <div className="row d-flex justify-content-center text-center">
+            <div className="col-lg-8">
+              <h1 className="text-light">Users</h1>
+              
             </div>
           </div>
         </div>
-      </section> 
+      </div>
+   
+    </div> 
       
 
       <div className="container my-5">
         {load?
-      <PulseLoader color="#4bc4daff" size={30} cssOverride={{display:"block", margin:"0 auto"}} loading={load}/>
+        <div className="d-flex justify-content-center">
+          <PulseLoader  size={30} loading={load} color="#00bd56" />
+        </div>
             :
         <div className="row justify-content-center no-gutters">
           <div className="col-md-10" style={{ boxShadow: "0px 0px 15px gray" }}>

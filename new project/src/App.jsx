@@ -29,6 +29,12 @@ import PgownerLayout from "./Components/Layout/PGownerLayout";
 import Addproperty from "./Components/PGowner/property/Addproperty";
 import Manageproperty from "./Components/PGowner/property/Manageproperty";
 import ViewCity from "./Components/users/ViewCity";
+import PGCard from "./Components/users/ViewPg";
+import PGDetails from "./Components/users/PgDetails";
+import ViewBooking from "./Components/users/ViewBooking";
+import ViewOwnerBooking from "./Components/PGowner/pages/ViewOwnerBooking";
+import PgDashboard from "./Components/PGowner/pages/PgDashboard";
+import Updateproperty from "./Components/PGowner/property/Updateproperty";
 
 
 function App() {
@@ -47,8 +53,12 @@ function App() {
             <Route path="contact" element={<Contact />} /> */}
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            {/* <Route path="pgowner" element={<PGowner />} /> */}
-             <Route path="/users/viewcity" element={<ViewCity/>}/>
+            <Route path="pg-register" element={<PGowner />} />
+             <Route path="users/viewcity" element={<ViewCity/>}/>
+             <Route path="viewpg/:cityId" element={<PGCard/>}/>
+             <Route path="viewpg" element={<PGCard/>}/>
+             <Route path="viewpgdetails/:id" element={<PGDetails/>}/>
+             <Route path="my-booking" element={<ViewBooking/>}/>
           </Route>
 
 
@@ -66,6 +76,7 @@ function App() {
   <Route path="PGowners" element={<PGowners />} />
   <Route path="Property" element={<Property/>}/>
    <Route path="bookings" element={<Bookings/>}/>
+    <Route path="viewpgdetails/:id" element={<PGDetails/>}/>
 </Route>
 
      
@@ -78,13 +89,16 @@ function App() {
     
  
         <Route path="pgowner" element={<PgownerLayout />}>
-  <Route index element={<Dashboard />} />
+          <Route index element={<PgDashboard />} />
 
-  <Route path="property/add property" element={<Addproperty/>} />
-  <Route path="property/manage property" element={<Manageproperty/>}/>
-  {/* <Route path="city/manage" element={<Manage />} /> */}
-  {/* <Route path="city/update/:id" element={<Update />} /> */}
-</Route>
+          <Route path="property/add" element={<Addproperty/>} />
+          <Route path="property/manage" element={<Manageproperty/>}/>
+          <Route path="property/update/:id" element={<Updateproperty/>}/>
+          {/* <Route path="city/manage" element={<Manage />} /> */}
+          {/* <Route path="city/update/:id" element={<Update />} /> */}
+          <Route path="bookings" element={<ViewOwnerBooking/>}/>
+        <Route path="viewpgdetails/:id" element={<PGDetails/>}/>
+      </Route>
           
 
 

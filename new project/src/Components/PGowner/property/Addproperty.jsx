@@ -1,8 +1,9 @@
-import { use, useState } from "react";
+import { useEffect, useState } from "react";
 import {toast } from "react-toastify";
 import axios from "axios";
 import { db } from "../../../Firebase";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { Timestamp, addDoc, collection, onSnapshot, query } from "firebase/firestore";
+import { PulseLoader } from "react-spinners";
 
 export default function Addproperty() {
   const [title, setTitle] = useState("");
@@ -10,22 +11,42 @@ export default function Addproperty() {
   const [imageName, setImageName] = useState("");
   const [size, setSize] = useState("");
   const [ac, setAc] = useState("No");
-  const [city, setCity] = useState([]);
+  const [cityId, setCityId] = useState([]);
   const [balcony, setBalcony] = useState("No");
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
-  const [owner, setowner] = useState([]);
   const [food, setFood] = useState("No");
   const [status, setStatus]= useState("booked");
-
+  const [load, setLoad]=useState(false)
+  const [video, setVideo]=useState("")
+  const [description, setDescription]=useState("")
+  const [location, setLocation]=useState("")
+  const [cities, setAllCities]=useState([])
   const handleImageChange = (e) => {
     setImageName(e.target.value);
     setImage(e.target.files[0]);
   };
 
+  const fetchCities = () => {
+    const q = query(collection(db, "cities"));
+  
+    onSnapshot(q, (cityData) => {
+      setAllCities(
+        cityData.docs.map((el) => ({
+          id: el.id,
+          ...el.data(),
+        }))
+      );
+    });
+  };
+  
+    useEffect(() => {
+      fetchCities();
+    }, []);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    setLoad(true)
 
     try {
       const formData = new FormData();
@@ -40,68 +61,86 @@ export default function Addproperty() {
       const imageUrl = res.data.secure_url;
 
       const propertyData = {
-        owner,
+        ownerId:sessionStorage.getItem("userId"),
         title,
-        
         image: imageUrl,
         size,
         status,
         ac,
         food,
-        city,
+        cityId,
         balcony,
         type,
         price,
-       
+        description, 
+        video,
+        location,
         createdAt: Timestamp.now(),
       };
 
       await addDoc(collection(db, "property"), propertyData);
       toast.success("Property added successfully!");
+      setAc("")
+      setCityId("")
+      setBalcony("")
+      setFood("")
+      setImage({})
+      setImageName("")
+      setPrice("")
+      setSize("")
+      setStatus("")
+      setTitle("")
+      setType("")
+      setVideo("")
+      setLocation("")
+      setDescription("")
+      
     } catch (error) {
       toast.error("Error uploading property: " + error.message);
     } 
+    finally{
+      setLoad(false)
+    }
   };
 
   return (
     <>
-      {/* Hero Section */}
-      <section
-        className="hero-wrap hero-wrap-2"
-        style={{ backgroundImage: 'url("/assets/img/hero-carousel/hero-carousel-1.jpg")' }}
-        data-stellar-background-ratio="0.5"
-      >
-        <div className="overlay" />
+      <div className="page-title" style={{background:"url('/assets/img/hero-carousel/hero-carousel-3.jpg')"}} >
+        <div className="heading">
         <div className="container">
-          <div className="row no-gutters slider-text align-items-end">
-            <div className="col-md-9 ftco-animate pb-5">
-              <p className="breadcrumbs mb-2">
-                <span className="mr-2">
-                  <a href="/">Home <i className="ion-ios-arrow-forward" /></a>
-                </span>
-                <span>Property <i className="ion-ios-arrow-forward" /></span>
-              </p>
-              <h1 className="mb-0 bread">Add Property</h1>
+          <div className="row d-flex justify-content-center text-center">
+            <div className="col-lg-8">
+              <h1 className="text-light">PG</h1>
+              
             </div>
           </div>
         </div>
-      </section>
+      </div>
+   
+    </div>
+     
+      <div className="container my-5">
+      {load? 
+      <div className="d-flex justify-content-center">
+      <PulseLoader  size={30} loading={load} color="#00bd56" />
+      </div>
+      :
 
        
           <div className="row justify-content-center no-gutters">
             <div className="col-md-7 mt-5" style={{ boxShadow: "0px 0px 15px gray" }}>
               <div className="contact-wrap w-100 p-md-5 p-4">
-                <h3 className="mb-4 text-center">Add Property</h3>
+                <h3 className="mb-4 text-center">Add PG Room</h3>
                 <form onSubmit={handleSubmit} className="contactForm">
                   <div className="row">
                     {/* Title */}
-                    <div className="col-md-12">
+                    <div className="col-md-12 my-2">
                       <div className="form-group">
                         <label className="label">Title</label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Property title"
+                          placeholder="PG title"
                           value={title}
                           onChange={(e) => setTitle(e.target.value)}
                           required
@@ -110,7 +149,7 @@ export default function Addproperty() {
                     </div>
 
                     {/* Image */}
-                    <div className="col-md-12">
+                    <div className="col-md-12 my-2">
                       <div className="form-group">
                         <label className="label">Image</label>
                         <input
@@ -125,7 +164,7 @@ export default function Addproperty() {
                     </div>
 
                     {/* Size */}
-                    <div className="col-md-12">
+                    <div className="col-md-12 my-2">
                       <div className="form-group">
                         <label className="label">Size (in Sqft)</label>
                         <input
@@ -140,7 +179,7 @@ export default function Addproperty() {
                     </div>
                         
                           {/* status */}
-                    <div className="col-md-4">
+                    <div className="col-md-4 my-2">
                       <div className="form-group">
                         <label className="label">Status</label>
                         <select className="form-control" value={status} onChange={(e) => setStatus(e.target.value)}>
@@ -151,7 +190,7 @@ export default function Addproperty() {
                     </div>
 
                     {/* AC */}
-                    <div className="col-md-4">
+                    <div className="col-md-4 my-2">
                       <div className="form-group">
                         <label className="label">AC Room</label>
                         <select className="form-control" value={ac} onChange={(e) => setAc(e.target.value)}>
@@ -162,7 +201,7 @@ export default function Addproperty() {
                     </div>
 
                     {/*Food */}
-                    <div className="col-md-4">
+                    <div className="col-md-4 my-2">
                       <div className="form-group">
                         <label className="label">Food</label>
                         <select className="form-control" value={food} onChange={(e) => setFood(e.target.value)}>
@@ -173,7 +212,7 @@ export default function Addproperty() {
                     </div>
                    
                     {/* Balcony */}
-                    <div className="col-md-4">
+                    <div className="col-md-6 my-2">
                       <div className="form-group">
                         <label className="label">Balcony</label>
                         <select className="form-control" value={balcony} onChange={(e) => setBalcony(e.target.value)}>
@@ -184,7 +223,7 @@ export default function Addproperty() {
                     </div>
 
                     {/* Type */}
-                    <div className="col-md-4">
+                    <div className="col-md-6 my-2">
                       <div className="form-group">
                         <label className="label">Type</label>
                         <select className="form-control" value={type} onChange={(e) => setType(e.target.value)} required>
@@ -214,40 +253,70 @@ export default function Addproperty() {
                     <div className="col-md-6">
                       <div className="form-group">
                         <label className="label">City </label>
-                         <input
+                         <select
                           type="text"
                           className="form-control"
                           placeholder="e.g. cityname"
-                          value={city}
-                          onChange={(e) => setCity(e.target.value)}
+                          value={cityId}
+                          onChange={(e) => setCityId(e.target.value)}
                           required
-                        />
+                        >
+                          <option value={""} disabled selected>Choose city</option>
+                          {cities?.map((el,index)=>(
+                            <option value={el?.id} key={index}>{el?.cityName}</option>
+                          ))}
+                        </select>
                       </div>
                     </div>
 
-                    {/* owner*/}
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <div className="form-group">
-                        <label className="label">Owner</label>
-                         <input
+                        <label className="label">Video</label>
+                        <input
                           type="text"
                           className="form-control"
-                          placeholder="e.g ownername"
-                          value={owner}
-                          onChange={(e) => setowner(e.target.value)}
+                          placeholder="Enter Video Link"
+                          value={video}
+                          onChange={(e) => setVideo(e.target.value)}
                           required
                         />
                       </div>
                     </div>
 
-                    {/* Submit */}
                     <div className="col-md-12">
+                      <div className="form-group">
+                        <label className="label">Location</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Enter Location"
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <label className="label">Description</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Enter Description"
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+                               
+                    {/* Submit */}
+                    <div className="col-md-12 my-2">
                       <div className="form-group">
                         <input
                           type="submit"
-                          className="btn btn-primary"
+                          className="btn btn-primary d-block mx-auto"
                           value="Submit"
-
                         />
                       </div>
                     </div>
@@ -256,7 +325,8 @@ export default function Addproperty() {
               </div>
             </div>
           </div>
-        
+}
+</div>
     </>
   );
 }

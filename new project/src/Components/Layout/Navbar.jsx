@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 export default function Navbar(){
   let isLogin=sessionStorage.getItem("isLogin")
+  let name=sessionStorage.getItem("name")
   const nav=useNavigate()
   const handleLogout=()=>{
      Swal.fire({
@@ -40,19 +41,17 @@ export default function Navbar(){
       <nav id="navmenu" className="navmenu">
         <ul>
           <li>
-            <Link to="index.html">
+            <Link to="/">
               Home
             </Link>
           </li>
           <li>
-            <Link to="/users/viewcity">View City</Link>
+            <Link to="/users/viewcity">City</Link>
           </li>
           <li>
-            <Link to="/users/services">View Rooms</Link>
+            <Link to="/viewpg">Rooms</Link>
           </li>
-          <li>
-            <Link to="/users/bookandpay">Book and Pay</Link>
-          </li>
+        
           {/* <li>
             <Link to="/agents">Agents</Link>
           </li>
@@ -62,17 +61,29 @@ export default function Navbar(){
           </li> */}
           {
           isLogin?
-         <li className="nav-item">
-                        <Link to={"#"} onClick={handleLogout} className="nav-link">
-                        Logout {name}
-                        </Link>
-                    </li>
+          <>
+          <li>
+            <Link to="/my-booking">Booking</Link>
+          </li>
+          <li className="nav-item">
+              <Link to={"#"} onClick={handleLogout} className="nav-link">
+              Logout {name}
+              </Link>
+          </li>
+          </>
                     :
+                    <>
                     <li className="nav-item">
                         <Link to={"/login"} className="nav-link">
                         Login
                         </Link>
                     </li>
+                    <li className="nav-item">
+                        <Link to={"/register"} className="nav-link">
+                        Register
+                        </Link>
+                    </li>
+                    </>
           }
         </ul>
         <i className="mobile-nav-toggle d-xl-none bi bi-list" />
